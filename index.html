@@ -3,419 +3,171 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Identity Vendor Placemat — Capability Grid</title>
+<title>Identity Vendor Analysis — Chris Hawk</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    /* ── CH BRAND SYSTEM ── */
-    --bg:           #E4E9EF;   /* light cool grey canvas */
-    --surface:      #FFFFFF;   /* white cards */
-    --surface2:     #F1F5F9;   /* CH Surface — row label bg */
-    --rule:         #CBD5E1;   /* light dividers */
-    --rule-bright:  #2563EB;   /* CH Electric Blue — key accents */
-    --text:         #0F172A;   /* CH Dark Navy — primary text */
-    --muted:        #64748B;   /* CH Slate Gray */
-    --muted2:       #94A3B8;   /* lighter slate */
-    --brand:        #2563EB;   /* CH Electric Blue — primary */
-    --brand-light:  #BFD4FF;   /* CH Light Blue — tints */
-    --brand-dark:   #1E3A5F;   /* CH Dark Blue — accents */
-
-    /* Vendor colors — kept to identify third-party companies */
-    --tu:  #3a8fd4;
-    --exp: #e03a2a;
-    --id5: #2db872;
-    --lr:  #f5a623;
-    --eps: #a066e8;
-    --lot: #e85d8a;
-
-    /* Tier colors — semantic / universal */
-    --strong:      #10B981;
-    --partial:     #F59E0B;
-    --limited:     #EF4444;
-    --strong-bg:   rgba(16,185,129,.12);
-    --partial-bg:  rgba(245,158,11,.12);
-    --limited-bg:  rgba(239,68,68,.10);
-
+    --bg:          #E4E9EF;
+    --surface:     #FFFFFF;
+    --surface2:    #F1F5F9;
+    --rule:        #CBD5E1;
+    --text:        #0F172A;
+    --muted:       #64748B;
+    --muted2:      #94A3B8;
+    --brand:       #2563EB;
+    --brand-light: #BFD4FF;
+    --brand-dark:  #1E3A5F;
+    --tu:  #3a8fd4; --exp: #e03a2a; --id5: #2db872;
+    --lr:  #f5a623; --eps: #a066e8; --lot: #e85d8a;
+    --strong:     #10B981; --partial: #F59E0B; --limited: #EF4444;
+    --strong-bg:  rgba(16,185,129,.12);
+    --partial-bg: rgba(245,158,11,.12);
+    --limited-bg: rgba(239,68,68,.10);
     --display: 'Montserrat', sans-serif;
     --body:    'Open Sans', system-ui, sans-serif;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: var(--body); min-height: 100vh; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--body);
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
+  /* TAB BAR */
+  .tab-bar {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--surface);
+    border-bottom: 1px solid var(--rule);
+    display: flex; justify-content: center;
+    box-shadow: 0 1px 3px rgba(15,23,42,.06);
   }
-
-  /* ── RESPONSIVE SCALING ── */
-  .scale-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    overflow: visible;
+  .tab-btn {
+    font-family: var(--display); font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .18em; color: var(--muted);
+    background: transparent; border: none; padding: 16px 40px;
+    cursor: pointer; border-bottom: 3px solid transparent;
+    transition: color .15s, border-color .15s; position: relative; bottom: -1px;
   }
+  .tab-btn:hover { color: var(--brand); }
+  .tab-btn.active { color: var(--brand); border-bottom-color: var(--brand); }
 
-  /* ── CANVAS: 4:5 ratio, 1080×1350 equivalent ── */
+  /* PANELS */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* SCALE WRAPPER */
+  .scale-wrapper { display: flex; justify-content: center; overflow: visible; }
+
+  /* SHARED CANVAS */
   .canvas {
-    width: 1080px;
-    min-height: 1350px;
-    background: var(--bg);
-    position: relative;
-    padding: 52px 52px 44px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    width: 1080px; background: var(--bg); position: relative;
+    padding: 52px 52px 44px; display: flex; flex-direction: column; overflow: hidden;
   }
-
-  /* Brand accent bar — top edge */
   .canvas::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
     background: linear-gradient(90deg, var(--brand) 0%, var(--brand-light) 60%, transparent 100%);
   }
+  .grid-canvas  { min-height: 1350px; }
+  .radar-canvas { min-height: 1350px; }
 
-  /* No background texture */
-
-  /* ── HEADER ── */
+  /* SHARED HEADER */
   .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 36px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid var(--rule);
-    position: relative;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 36px; padding-bottom: 24px; border-bottom: 1px solid var(--rule);
   }
-
   .header-left { flex: 1; }
-
   .kicker {
-    font-family: var(--display);
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: .22em;
-    text-transform: uppercase;
-    color: var(--brand);
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    font-family: var(--display); font-size: 9px; font-weight: 600;
+    letter-spacing: .22em; text-transform: uppercase; color: var(--brand);
+    margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
   }
-
-  .kicker::before {
-    content: '';
-    display: block;
-    width: 24px;
-    height: 2px;
-    background: var(--brand);
-    border-radius: 1px;
-  }
-
-  .headline {
-    font-family: var(--display);
-    font-weight: 800;
-    font-size: 62px;
-    line-height: 1.0;
-    letter-spacing: -.01em;
-    color: var(--text);
-  }
-
-  .headline em {
-    font-style: normal;
-    color: var(--brand);
-  }
-
-  .header-right {
-    text-align: right;
-    padding-top: 6px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 6px;
-  }
-
-  /* CH monogram badge */
+  .kicker::before { content: ''; display: block; width: 24px; height: 2px; background: var(--brand); border-radius: 1px; }
+  .headline { font-family: var(--display); font-weight: 800; font-size: 62px; line-height: 1.0; letter-spacing: -.01em; color: var(--text); }
+  .headline em { font-style: normal; color: var(--brand); }
+  .header-right { text-align: right; padding-top: 6px; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
   .ch-badge {
-    width: 44px;
-    height: 44px;
-    background: var(--brand);
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--display);
-    font-size: 16px;
-    font-weight: 800;
-    color: #fff;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
-    margin-left: auto;
+    width: 44px; height: 44px; background: var(--brand); border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--display); font-size: 16px; font-weight: 800; color: #fff;
+    letter-spacing: 1px; margin-bottom: 8px; margin-left: auto;
   }
+  .date-label { font-family: var(--display); font-size: 9px; font-weight: 600; color: var(--muted); letter-spacing: .15em; text-transform: uppercase; }
 
-  .date-label {
-    font-family: var(--display);
-    font-size: 9px;
-    font-weight: 600;
-    color: var(--muted);
-    letter-spacing: .15em;
-    text-transform: uppercase;
-  }
+  /* SHARED FOOTER */
+  .footer { margin-top: auto; padding-top: 22px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: flex-end; }
+  .footer-note { font-family: var(--body); font-size: 8px; color: var(--muted2); line-height: 1.7; max-width: 580px; }
+  .footer-logo { font-family: var(--display); font-weight: 800; font-size: 18px; color: var(--brand); letter-spacing: .08em; text-transform: uppercase; }
 
-  .byline {
-    font-family: var(--display);
-    font-size: 9px;
-    font-weight: 500;
-    color: var(--brand-light);
-    letter-spacing: .08em;
-    opacity: .7;
-  }
+  /* ── GRID STYLES ── */
+  .tier-legend { display: flex; gap: 20px; margin-bottom: 28px; align-items: center; padding: 10px 14px; background: var(--surface); border-left: 2px solid var(--brand); border-radius: 0 4px 4px 0; width: fit-content; }
+  .tier-legend-label { font-family: var(--display); font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: .16em; color: var(--muted); }
+  .tier-legend-item { display: flex; align-items: center; gap: 7px; font-family: var(--display); font-size: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
+  .tier-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .td-strong { background: var(--strong); } .td-partial { background: var(--partial); } .td-limited { background: var(--limited); }
 
-  /* ── LEGEND ── */
-  .legend {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 28px;
-    align-items: center;
-    padding: 10px 14px;
-    background: var(--surface);
-    border-left: 2px solid var(--brand);
-    border-radius: 0 4px 4px 0;
-    width: fit-content;
-  }
+  .vendor-header { display: grid; grid-template-columns: 196px repeat(6, 1fr); gap: 3px; margin-bottom: 3px; }
+  .vh-cell { background: var(--surface); padding: 13px 11px 11px; display: flex; flex-direction: column; gap: 5px; border-top: 3px solid transparent; border-radius: 2px; }
+  .vh-cell.tu{border-color:var(--tu)} .vh-cell.exp{border-color:var(--exp)} .vh-cell.id5{border-color:var(--id5)}
+  .vh-cell.lr{border-color:var(--lr)} .vh-cell.eps{border-color:var(--eps)} .vh-cell.lot{border-color:var(--lot)}
+  .vh-name { font-family: var(--display); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; line-height: 1.3; }
+  .vh-cell.tu .vh-name{color:var(--tu)} .vh-cell.exp .vh-name{color:var(--exp)} .vh-cell.id5 .vh-name{color:var(--id5)}
+  .vh-cell.lr .vh-name{color:var(--lr)} .vh-cell.eps .vh-name{color:var(--eps)} .vh-cell.lot .vh-name{color:var(--lot)}
+  .vh-sub { font-family: var(--body); font-size: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
 
-  .legend-label {
-    font-family: var(--display);
-    font-size: 8px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .16em;
-    color: var(--muted);
-    margin-right: 2px;
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    font-family: var(--display);
-    font-size: 8px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: .12em;
-    color: var(--muted);
-  }
-
-  .legend-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .ld-strong  { background: var(--strong); }
-  .ld-partial { background: var(--partial); }
-  .ld-limited { background: var(--limited); }
-
-  /* ── VENDOR HEADER ROW ── */
-  .vendor-header {
-    display: grid;
-    grid-template-columns: 196px repeat(6, 1fr);
-    gap: 3px;
-    margin-bottom: 3px;
-  }
-
-  .vh-empty { }
-
-  .vh-cell {
-    background: var(--surface);
-    padding: 13px 11px 11px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    border-top: 3px solid transparent;
-    border-radius: 2px;
-  }
-
-  .vh-cell.tu  { border-color: var(--tu); }
-  .vh-cell.exp { border-color: var(--exp); }
-  .vh-cell.id5 { border-color: var(--id5); }
-  .vh-cell.lr  { border-color: var(--lr); }
-  .vh-cell.eps { border-color: var(--eps); }
-  .vh-cell.lot { border-color: var(--lot); }
-
-  .vh-name {
-    font-family: var(--display);
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    line-height: 1.3;
-  }
-
-  .vh-cell.tu  .vh-name { color: var(--tu); }
-  .vh-cell.exp .vh-name { color: var(--exp); }
-  .vh-cell.id5 .vh-name { color: var(--id5); }
-  .vh-cell.lr  .vh-name { color: var(--lr); }
-  .vh-cell.eps .vh-name { color: var(--eps); }
-  .vh-cell.lot .vh-name { color: var(--lot); }
-
-  .vh-sub {
-    font-family: var(--body);
-    font-size: 8px;
-    font-weight: 400;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: .06em;
-    line-height: 1.4;
-  }
-
-  /* ── GRID ROWS ── */
-  .grid-row {
-    display: grid;
-    grid-template-columns: 196px repeat(6, 1fr);
-    gap: 3px;
-    margin-bottom: 3px;
-  }
-
+  .grid-row { display: grid; grid-template-columns: 196px repeat(6, 1fr); gap: 3px; margin-bottom: 3px; }
   .grid-row:last-child { margin-bottom: 0; }
-
-  .row-label {
-    background: var(--surface2);
-    padding: 16px 14px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-    border-left: 2px solid var(--brand);
-    border-radius: 2px;
-  }
-
-  .row-label-title {
-    font-family: var(--display);
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .1em;
-    color: var(--text);
-    line-height: 1.3;
-  }
-
-  .row-label-desc {
-    font-family: var(--body);
-    font-size: 9.5px;
-    font-weight: 400;
-    color: var(--muted);
-    line-height: 1.45;
-  }
-
-  .grid-cell {
-    padding: 14px 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    justify-content: flex-start;
-    border-radius: 2px;
-  }
-
+  .row-label { background: var(--surface2); padding: 16px 14px; display: flex; flex-direction: column; justify-content: center; gap: 5px; border-left: 2px solid var(--brand); border-radius: 2px; }
+  .row-label-title { font-family: var(--display); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--text); line-height: 1.3; }
+  .row-label-desc { font-family: var(--body); font-size: 9.5px; color: var(--muted); line-height: 1.45; }
+  .grid-cell { padding: 14px 12px; display: flex; flex-direction: column; gap: 7px; border-radius: 2px; }
   .grid-cell.strong  { background: var(--strong-bg);  border-bottom: 1px solid rgba(16,185,129,.15); }
   .grid-cell.partial { background: var(--partial-bg);  border-bottom: 1px solid rgba(245,158,11,.15); }
   .grid-cell.limited { background: var(--limited-bg);  border-bottom: 1px solid rgba(239,68,68,.12); }
+  .tier-badge { display: inline-flex; align-items: center; gap: 5px; font-family: var(--display); font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; width: fit-content; }
+  .tier-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .strong .tier-badge{color:var(--strong)} .partial .tier-badge{color:var(--partial)} .limited .tier-badge{color:var(--limited)}
+  .strong .tier-badge::before{background:var(--strong)} .partial .tier-badge::before{background:var(--partial)} .limited .tier-badge::before{background:var(--limited)}
+  .cell-note { font-family: var(--body); font-size: 9.5px; color: #334155; line-height: 1.5; }
 
-  .tier-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-family: var(--display);
-    font-size: 8px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .12em;
-    width: fit-content;
-  }
-
-  .tier-badge::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .strong  .tier-badge { color: var(--strong);  }
-  .partial .tier-badge { color: var(--partial); }
-  .limited .tier-badge { color: var(--limited); }
-
-  .strong  .tier-badge::before { background: var(--strong); }
-  .partial .tier-badge::before { background: var(--partial); }
-  .limited .tier-badge::before { background: var(--limited); }
-
-  .cell-note {
-    font-family: var(--body);
-    font-size: 9.5px;
-    font-weight: 400;
-    color: #334155;
-    line-height: 1.5;
-  }
-
-  /* ── FOOTER ── */
-  .footer {
-    margin-top: auto;
-    padding-top: 22px;
-    border-top: 1px solid var(--rule);
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
-
-  .footer-note {
-    font-family: var(--body);
-    font-size: 8px;
-    font-weight: 400;
-    color: var(--muted2);
-    letter-spacing: .03em;
-    line-height: 1.7;
-    max-width: 580px;
-  }
-
-  .footer-brand {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 4px;
-  }
-
-  .footer-logo {
-    font-family: var(--display);
-    font-weight: 800;
-    font-size: 18px;
-    color: var(--brand);
-    letter-spacing: .08em;
-    text-transform: uppercase;
-  }
-
-  .footer-url {
-    font-family: var(--body);
-    font-size: 8px;
-    color: var(--muted2);
-    letter-spacing: .06em;
-  }
+  /* ── RADAR STYLES ── */
+  .tier-key { display: flex; align-items: center; gap: 20px; padding: 10px 14px; background: var(--surface); border-left: 2px solid var(--brand); border-radius: 0 4px 4px 0; width: fit-content; }
+  .tk-label { font-family: var(--display); font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: .16em; color: var(--muted); }
+  .tk-items { display: flex; gap: 20px; }
+  .tk-item { display: flex; align-items: center; gap: 7px; font-family: var(--display); font-size: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; }
+  .tk-ring { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: 8px; font-family: var(--display); flex-shrink: 0; }
+  .tk-strong{color:#10B981} .tk-partial{color:#F59E0B} .tk-limited{color:#EF4444}
+  .tier-key-row { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+  .isolate-hint { font-family: var(--display); font-size: 8px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .reset-btn { display: none; font-family: var(--display); font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); background: transparent; border: 1px solid var(--rule); padding: 5px 14px; cursor: pointer; border-radius: 3px; transition: color .15s, border-color .15s; }
+  .reset-btn:hover { color: var(--brand); border-color: var(--brand); }
+  .reset-btn.visible { display: block; }
+  .radar-wrap { display: flex; justify-content: center; align-items: center; margin: 8px 0 16px; flex: 1; }
+  svg { overflow: visible; }
+  .legend-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin-bottom: 24px; }
+  .legend-card { background: var(--surface); padding: 14px 16px; display: flex; align-items: center; gap: 12px; border-left: 3px solid transparent; cursor: pointer; border-radius: 2px; transition: background .18s, opacity .22s, box-shadow .18s; }
+  .legend-card:hover { background: var(--surface2); }
+  .legend-card.active { background: var(--surface2); box-shadow: 0 0 0 1px var(--brand); }
+  .legend-card.dimmed { opacity: .25; }
+  .lc-tu{border-color:var(--tu)} .lc-exp{border-color:var(--exp)} .lc-id5{border-color:var(--id5)}
+  .lc-lr{border-color:var(--lr)} .lc-eps{border-color:var(--eps)} .lc-lot{border-color:var(--lot)}
+  .lc-swatch { width: 28px; height: 28px; border-radius: 50%; opacity: .3; flex-shrink: 0; }
+  .lc-tu .lc-swatch{background:var(--tu)} .lc-exp .lc-swatch{background:var(--exp)} .lc-id5 .lc-swatch{background:var(--id5)}
+  .lc-lr .lc-swatch{background:var(--lr)} .lc-eps .lc-swatch{background:var(--eps)} .lc-lot .lc-swatch{background:var(--lot)}
+  .lc-name { font-family: var(--display); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
+  .lc-tu .lc-name{color:var(--tu)} .lc-exp .lc-name{color:var(--exp)} .lc-id5 .lc-name{color:var(--id5)}
+  .lc-lr .lc-name{color:var(--lr)} .lc-eps .lc-name{color:var(--eps)} .lc-lot .lc-name{color:var(--lot)}
+  .lc-scores { font-family: var(--body); font-size: 9px; color: var(--muted); line-height: 1.55; }
+  .vendor-group { cursor: pointer; }
+  .vendor-group polygon, .vendor-group circle { transition: opacity .22s, stroke-width .22s; }
 </style>
 </head>
 <body>
-<div class="scale-wrapper">
-<div class="canvas" id="canvas">
 
-  <!-- HEADER -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('grid',this)">Grid View</button>
+  <button class="tab-btn" onclick="switchTab('radar',this)">Radar View</button>
+</div>
+
+<!-- GRID PANEL -->
+<div id="panel-grid" class="tab-panel active">
+<div class="scale-wrapper"><div class="canvas grid-canvas" id="canvas-grid">
+
   <div class="header">
     <div class="header-left">
       <div class="kicker">Identity Vendor Analysis · Part II</div>
@@ -427,234 +179,249 @@
     </div>
   </div>
 
-  <!-- LEGEND -->
-  <div class="legend">
-    <span class="legend-label">Tier key —</span>
-    <div class="legend-item"><div class="legend-dot ld-strong"></div> Strong</div>
-    <div class="legend-item"><div class="legend-dot ld-partial"></div> Partial</div>
-    <div class="legend-item"><div class="legend-dot ld-limited"></div> Limited</div>
+  <div class="tier-legend">
+    <span class="tier-legend-label">Tier key —</span>
+    <div class="tier-legend-item"><div class="tier-dot td-strong"></div> Strong</div>
+    <div class="tier-legend-item"><div class="tier-dot td-partial"></div> Partial</div>
+    <div class="tier-legend-item"><div class="tier-dot td-limited"></div> Limited</div>
   </div>
 
-  <!-- VENDOR HEADER -->
   <div class="vendor-header">
-    <div class="vh-empty"></div>
-    <div class="vh-cell tu">
-      <div class="vh-name">Trans&shy;Union</div>
-      <div class="vh-sub">TruAudience</div>
-    </div>
-    <div class="vh-cell exp">
-      <div class="vh-name">Experian</div>
-      <div class="vh-sub">Mktg Services</div>
-    </div>
-    <div class="vh-cell id5">
-      <div class="vh-name">ID5</div>
-      <div class="vh-sub">Adaptive ID</div>
-    </div>
-    <div class="vh-cell lr">
-      <div class="vh-name">Live&shy;Ramp</div>
-      <div class="vh-sub">RampID</div>
-    </div>
-    <div class="vh-cell eps">
-      <div class="vh-name">Epsilon</div>
-      <div class="vh-sub">CORE ID</div>
-    </div>
-    <div class="vh-cell lot">
-      <div class="vh-name">Lotame</div>
-      <div class="vh-sub">Panorama ID</div>
-    </div>
+    <div></div>
+    <div class="vh-cell tu"><div class="vh-name">Trans&shy;Union</div><div class="vh-sub">TruAudience</div></div>
+    <div class="vh-cell exp"><div class="vh-name">Experian</div><div class="vh-sub">Mktg Services</div></div>
+    <div class="vh-cell id5"><div class="vh-name">ID5</div><div class="vh-sub">Adaptive ID</div></div>
+    <div class="vh-cell lr"><div class="vh-name">Live&shy;Ramp</div><div class="vh-sub">RampID</div></div>
+    <div class="vh-cell eps"><div class="vh-name">Epsilon</div><div class="vh-sub">CORE ID</div></div>
+    <div class="vh-cell lot"><div class="vh-name">Lotame</div><div class="vh-sub">Panorama ID</div></div>
   </div>
 
-  <!-- ROW 1: DATA MARKETPLACE -->
   <div class="grid-row">
-    <div class="row-label">
-      <div class="row-label-title">Data Marketplace</div>
-      <div class="row-label-desc">Third-party data availability, segment library, activation reach</div>
-    </div>
-    <div class="grid-cell strong">
-      <div class="tier-badge">Strong</div>
-      <div class="cell-note">130,000+ off-the-shelf and custom segments from 45+ data and identity partners. Credit-informed segments unique to bureau operators.</div>
-    </div>
-    <div class="grid-cell strong">
-      <div class="tier-badge">Strong</div>
-      <div class="cell-note">3,200+ segments. 200+ destinations. Largest disclosed segment library of any neutral vendor.</div>
-    </div>
-    <div class="grid-cell limited">
-      <div class="tier-badge">Limited</div>
-      <div class="cell-note">No segment library. Identity infrastructure only — enables others' segments, doesn't sell its own.</div>
-    </div>
-    <div class="grid-cell strong">
-      <div class="tier-badge">Strong</div>
-      <div class="cell-note">25,000+ publisher data network. RampID powers data collaboration at ecosystem scale.</div>
-    </div>
-    <div class="grid-cell strong">
-      <div class="tier-badge">Strong</div>
-      <div class="cell-note">Abacus co-op + proprietary purchase data. Deep CPG, retail, and financial services coverage.</div>
-    </div>
-    <div class="grid-cell partial">
-      <div class="tier-badge">Partial</div>
-      <div class="cell-note">Third-party data partnerships via Panorama. Stronger on reach than data depth.</div>
-    </div>
+    <div class="row-label"><div class="row-label-title">Data Marketplace</div><div class="row-label-desc">Third-party data availability, segment library, activation reach</div></div>
+    <div class="grid-cell strong"><div class="tier-badge">Strong</div><div class="cell-note">130,000+ off-the-shelf and custom segments from 45+ data and identity partners. Credit-informed segments unique to bureau operators.</div></div>
+    <div class="grid-cell strong"><div class="tier-badge">Strong</div><div class="cell-note">3,200+ segments. 200+ destinations. Largest disclosed segment library of any neutral vendor.</div></div>
+    <div class="grid-cell limited"><div class="tier-badge">Limited</div><div class="cell-note">No segment library. Identity infrastructure only — enables others' segments, doesn't sell its own.</div></div>
+    <div class="grid-cell strong"><div class="tier-badge">Strong</div><div class="cell-note">25,000+ publisher data network. RampID powers data collaboration at ecosystem scale.</div></div>
+    <div class="grid-cell strong"><div class="tier-badge">Strong</div><div class="cell-note">Abacus co-op + proprietary purchase data. Deep CPG, retail, and financial services coverage.</div></div>
+    <div class="grid-cell partial"><div class="tier-badge">Partial</div><div class="cell-note">Third-party data partnerships via Panorama. Stronger on reach than data depth.</div></div>
   </div>
 
-  <!-- ROW 2: CLEAN ROOM TECH -->
   <div class="grid-row">
-    <div class="row-label">
-      <div class="row-label-title">Clean Room Tech</div>
-      <div class="row-label-desc">Native clean room product or deep integration for privacy-safe collaboration</div>
-    </div>
-    <div class="grid-cell partial">
-      <div class="tier-badge">Partial</div>
-      <div class="cell-note">TruAudience includes a named clean room product built on OneTru. Real product, but not a market-leading platform at LiveRamp's scale.</div>
-    </div>
-    <div class="grid-cell partial">
-      <div class="tier-badge">Partial</div>
-      <div class="cell-note">"Identity as a service" inside client-preferred clean rooms. Agnostic integrator, not a native platform.</div>
-    </div>
-    <div class="grid-cell limited">
-      <div class="tier-badge">Limited</div>
-      <div class="cell-note">No clean room product. ID5 ID used within partner clean room environments as the identity layer.</div>
-    </div>
-    <div class="grid-cell strong">
-      <div class="tier-badge">Strong</div>
-      <div class="cell-note">Safe Haven — built on the Habu acquisition — is one of the deepest clean room ecosystems in market. 150% YoY adoption growth in 2024, 300+ brands and publishers.</div>
-    </div>
-    <div class="grid-cell strong">
-      <div class="tier-badge">Strong</div>
-      <div class="cell-note">Epsilon PeopleCloud Clean Room named a Leader in IDC MarketScape 2025. Preloaded with CORE ID and 200M+ profiles. Full product, not a feature.</div>
-    </div>
-    <div class="grid-cell limited">
-      <div class="tier-badge">Limited</div>
-      <div class="cell-note">Supports clean room use cases via Panorama ID. No proprietary clean room infrastructure.</div>
-    </div>
+    <div class="row-label"><div class="row-label-title">Clean Room Tech</div><div class="row-label-desc">Native clean room product or deep integration for privacy-safe collaboration</div></div>
+    <div class="grid-cell partial"><div class="tier-badge">Partial</div><div class="cell-note">TruAudience includes a named clean room product built on OneTru. Real product, but not a market-leading platform at LiveRamp's scale.</div></div>
+    <div class="grid-cell partial"><div class="tier-badge">Partial</div><div class="cell-note">"Identity as a service" inside client-preferred clean rooms. Agnostic integrator, not a native platform.</div></div>
+    <div class="grid-cell limited"><div class="tier-badge">Limited</div><div class="cell-note">No clean room product. ID5 ID used within partner clean room environments as the identity layer.</div></div>
+    <div class="grid-cell strong"><div class="tier-badge">Strong</div><div class="cell-note">Safe Haven — built on the Habu acquisition — is one of the deepest clean room ecosystems in market. 150% YoY adoption growth in 2024, 300+ brands and publishers.</div></div>
+    <div class="grid-cell strong"><div class="tier-badge">Strong</div><div class="cell-note">Epsilon PeopleCloud Clean Room named a Leader in IDC MarketScape 2025. Preloaded with CORE ID and 200M+ profiles. Full product, not a feature.</div></div>
+    <div class="grid-cell limited"><div class="tier-badge">Limited</div><div class="cell-note">Supports clean room use cases via Panorama ID. No proprietary clean room infrastructure.</div></div>
   </div>
 
-  <!-- ROW 3: GEO COVERAGE -->
   <div class="grid-row">
-    <div class="row-label">
-      <div class="row-label-title">Geo Coverage</div>
-      <div class="row-label-desc">International identity and data depth outside the United States</div>
-    </div>
-    <div class="grid-cell partial">
-      <div class="tier-badge">Partial</div>
-      <div class="cell-note">30+ countries. US-dominant in marketing identity. International bureau ops serve credit, not marketing.</div>
-    </div>
-    <div class="grid-cell strong">
-      <div class="tier-badge">Strong</div>
-      <div class="cell-note">WorldView covers 130+ countries with consistent consumer data. Strongest international coverage of all six.</div>
-    </div>
-    <div class="grid-cell strong">
-      <div class="tier-badge">Strong</div>
-      <div class="cell-note">EU-native GDPR design. 1.5B users / 665M HH post-TrueData. Strong EMEA and APAC footprint.</div>
-    </div>
-    <div class="grid-cell partial">
-      <div class="tier-badge">Partial</div>
-      <div class="cell-note">Global reach via partnerships. 94% of revenue is US-based. International depth is limited.</div>
-    </div>
-    <div class="grid-cell limited">
-      <div class="tier-badge">Limited</div>
-      <div class="cell-note">97% US revenue. Epsilon's data and modeling heritage is almost entirely domestic.</div>
-    </div>
-    <div class="grid-cell strong">
-      <div class="tier-badge">Strong</div>
-      <div class="cell-note">Panorama ID spans 109 countries. The strongest international alternative ID of the Publicis stack.</div>
-    </div>
+    <div class="row-label"><div class="row-label-title">Geo Coverage</div><div class="row-label-desc">International identity and data depth outside the United States</div></div>
+    <div class="grid-cell partial"><div class="tier-badge">Partial</div><div class="cell-note">30+ countries. US-dominant in marketing identity. International bureau ops serve credit, not marketing.</div></div>
+    <div class="grid-cell strong"><div class="tier-badge">Strong</div><div class="cell-note">WorldView covers 130+ countries with consistent consumer data. Strongest international coverage of all six.</div></div>
+    <div class="grid-cell strong"><div class="tier-badge">Strong</div><div class="cell-note">EU-native GDPR design. 1.5B users / 665M HH post-TrueData. Strong EMEA and APAC footprint.</div></div>
+    <div class="grid-cell partial"><div class="tier-badge">Partial</div><div class="cell-note">Global reach via partnerships. 94% of revenue is US-based. International depth is limited.</div></div>
+    <div class="grid-cell limited"><div class="tier-badge">Limited</div><div class="cell-note">97% US revenue. Epsilon's data and modeling heritage is almost entirely domestic.</div></div>
+    <div class="grid-cell strong"><div class="tier-badge">Strong</div><div class="cell-note">Panorama ID spans 109 countries. The strongest international alternative ID of the Publicis stack.</div></div>
   </div>
 
-  <!-- ROW 4: IDENTITY COVERAGE -->
   <div class="grid-row">
-    <div class="row-label">
-      <div class="row-label-title">Identity Coverage</div>
-      <div class="row-label-desc">Depth, scale, and uniqueness of identity graph and resolution methodology</div>
-    </div>
-    <div class="grid-cell strong">
-      <div class="tier-badge">Strong</div>
-      <div class="cell-note">98% US adult coverage. Credit + telecom anchor. 99.5% persistence. Unique regulated data moat.</div>
-    </div>
-    <div class="grid-cell strong">
-      <div class="tier-badge">Strong</div>
-      <div class="cell-note">250M individuals, 4B+ digital IDs. Largest disclosed digital ID count of any neutral vendor.</div>
-    </div>
-    <div class="grid-cell partial">
-      <div class="tier-badge">Partial</div>
-      <div class="cell-note">Probabilistic, cookieless-native. No offline anchor. Strongest where other IDs produce zero signal.</div>
-    </div>
-    <div class="grid-cell strong">
-      <div class="tier-badge">Strong</div>
-      <div class="cell-note">RampID: deterministic, PII-based. Deep publisher network drives scale. Industry-standard onboarding.</div>
-    </div>
-    <div class="grid-cell strong">
-      <div class="tier-badge">Strong</div>
-      <div class="cell-note">CORE ID anchored to verified PII with purchase signal depth. Best-in-class for loyalty/CRM use cases.</div>
-    </div>
-    <div class="grid-cell partial">
-      <div class="tier-badge">Partial</div>
-      <div class="cell-note">Cookieless Panorama ID strong on open-web reach. Less deterministic depth than bureau or CORE ID.</div>
-    </div>
+    <div class="row-label"><div class="row-label-title">Identity Coverage</div><div class="row-label-desc">Depth, scale, and uniqueness of identity graph and resolution methodology</div></div>
+    <div class="grid-cell strong"><div class="tier-badge">Strong</div><div class="cell-note">98% US adult coverage. Credit + telecom anchor. 99.5% persistence. Unique regulated data moat.</div></div>
+    <div class="grid-cell strong"><div class="tier-badge">Strong</div><div class="cell-note">250M individuals, 4B+ digital IDs. Largest disclosed digital ID count of any neutral vendor.</div></div>
+    <div class="grid-cell partial"><div class="tier-badge">Partial</div><div class="cell-note">Probabilistic, cookieless-native. No offline anchor. Strongest where other IDs produce zero signal.</div></div>
+    <div class="grid-cell strong"><div class="tier-badge">Strong</div><div class="cell-note">RampID: deterministic, PII-based. Deep publisher network drives scale. Industry-standard onboarding.</div></div>
+    <div class="grid-cell strong"><div class="tier-badge">Strong</div><div class="cell-note">CORE ID anchored to verified PII with purchase signal depth. Best-in-class for loyalty/CRM use cases.</div></div>
+    <div class="grid-cell partial"><div class="tier-badge">Partial</div><div class="cell-note">Cookieless Panorama ID strong on open-web reach. Less deterministic depth than bureau or CORE ID.</div></div>
   </div>
 
-  <!-- ROW 5: SERVICES CAPABILITIES -->
   <div class="grid-row">
-    <div class="row-label">
-      <div class="row-label-title">Services Capabilities</div>
-      <div class="row-label-desc">Measurement, analytics, managed services, and AI-layer depth</div>
-    </div>
-    <div class="grid-cell strong">
-      <div class="tier-badge">Strong</div>
-      <div class="cell-note">Native MMM + MTA (Neustar). TruIQ AI analytics. Credit-informed attribution. Full managed service.</div>
-    </div>
-    <div class="grid-cell partial">
-      <div class="tier-badge">Partial</div>
-      <div class="cell-note">Identity infrastructure for measurement. No native MMM/MTA. Powers VideoAmp, MiQ, AdRoll. Managed service available.</div>
-    </div>
-    <div class="grid-cell limited">
-      <div class="tier-badge">Limited</div>
-      <div class="cell-note">Technical integration model. No managed services, no measurement platform. Identity infrastructure only.</div>
-    </div>
-    <div class="grid-cell partial">
-      <div class="tier-badge">Partial</div>
-      <div class="cell-note">Deployment and data collaboration services around Safe Haven. Implementation-focused, not a native measurement or analytics practice.</div>
-    </div>
-    <div class="grid-cell strong">
-      <div class="tier-badge">Strong</div>
-      <div class="cell-note">Full-stack: targeting, measurement, Epsilon Digital agency, Epsilon PeopleCloud platform. Deepest service layer of the six.</div>
-    </div>
-    <div class="grid-cell partial">
-      <div class="tier-badge">Partial</div>
-      <div class="cell-note">Data enrichment and audience services. No native measurement or analytics practice. Less depth than Epsilon or TransUnion.</div>
-    </div>
+    <div class="row-label"><div class="row-label-title">Services Capabilities</div><div class="row-label-desc">Measurement, analytics, managed services, and AI-layer depth</div></div>
+    <div class="grid-cell strong"><div class="tier-badge">Strong</div><div class="cell-note">Native MMM + MTA (Neustar). TruIQ AI analytics. Credit-informed attribution. Full managed service.</div></div>
+    <div class="grid-cell partial"><div class="tier-badge">Partial</div><div class="cell-note">Identity infrastructure for measurement. No native MMM/MTA. Powers VideoAmp, MiQ, AdRoll. Managed service available.</div></div>
+    <div class="grid-cell limited"><div class="tier-badge">Limited</div><div class="cell-note">Technical integration model. No managed services, no measurement platform. Identity infrastructure only.</div></div>
+    <div class="grid-cell partial"><div class="tier-badge">Partial</div><div class="cell-note">Deployment and data collaboration services around Safe Haven. Implementation-focused, not a native measurement or analytics practice.</div></div>
+    <div class="grid-cell strong"><div class="tier-badge">Strong</div><div class="cell-note">Full-stack: targeting, measurement, Epsilon Digital agency, Epsilon PeopleCloud platform. Deepest service layer of the six.</div></div>
+    <div class="grid-cell partial"><div class="tier-badge">Partial</div><div class="cell-note">Data enrichment and audience services. No native measurement or analytics practice. Less depth than Epsilon or TransUnion.</div></div>
   </div>
 
-  <!-- FOOTER -->
   <div class="footer">
     <div class="footer-note">Tiers reflect analytical judgment based on public filings, product documentation, and press releases as of May 2026. Not investment advice. TransUnion connection disclosed: author worked at Neustar/TransUnion 2017–2021.</div>
-    <div class="footer-brand">
-      <div class="footer-logo">CHRISHAWK</div>
+    <div class="footer-logo">CHRISHAWK</div>
+  </div>
+
+</div></div>
+</div>
+
+<!-- RADAR PANEL -->
+<div id="panel-radar" class="tab-panel">
+<div class="scale-wrapper"><div class="canvas radar-canvas" id="canvas-radar">
+
+  <div class="header">
+    <div class="header-left">
+      <div class="kicker">Identity Vendor Analysis · Part II</div>
+      <div class="headline">CAPABILITY<br><em>RADAR</em></div>
+    </div>
+    <div class="header-right">
+      <div class="ch-badge">CH</div>
+      <div class="date-label">May 2026</div>
     </div>
   </div>
 
-</div>
+  <div class="tier-key-row">
+    <div class="tier-key">
+      <span class="tk-label">Tier scoring —</span>
+      <div class="tk-items">
+        <div class="tk-item tk-strong"><div class="tk-ring">2</div> Strong</div>
+        <div class="tk-item tk-partial"><div class="tk-ring">1</div> Partial</div>
+        <div class="tk-item tk-limited"><div class="tk-ring">0</div> Limited</div>
+      </div>
+    </div>
+    <span class="isolate-hint">Click any vendor to isolate</span>
+    <button class="reset-btn" id="resetBtn" onclick="resetFocus()">Reset</button>
+  </div>
+
+  <div class="radar-wrap">
+    <svg id="radar" width="860" height="620" viewBox="0 0 860 620"></svg>
+  </div>
+
+  <div class="legend-grid">
+    <div class="legend-card lc-tu" data-vendor="TransUnion" onclick="toggleFocus(this)">
+      <div class="lc-swatch"></div>
+      <div><div class="lc-name">TransUnion</div><div class="lc-scores">Marketplace: Strong (130K+ segments) · Clean Room: Partial<br>Geo: Partial · Identity: Strong · Services: Strong</div></div>
+    </div>
+    <div class="legend-card lc-exp" data-vendor="Experian" onclick="toggleFocus(this)">
+      <div class="lc-swatch"></div>
+      <div><div class="lc-name">Experian</div><div class="lc-scores">Marketplace: Strong · Clean Room: Partial<br>Geo: Strong · Identity: Strong · Services: Partial</div></div>
+    </div>
+    <div class="legend-card lc-id5" data-vendor="ID5" onclick="toggleFocus(this)">
+      <div class="lc-swatch"></div>
+      <div><div class="lc-name">ID5</div><div class="lc-scores">Marketplace: Limited · Clean Room: Limited<br>Geo: Strong · Identity: Partial · Services: Limited</div></div>
+    </div>
+    <div class="legend-card lc-lr" data-vendor="LiveRamp" onclick="toggleFocus(this)">
+      <div class="lc-swatch"></div>
+      <div><div class="lc-name">LiveRamp</div><div class="lc-scores">Marketplace: Strong · Clean Room: Strong (Safe Haven / Habu)<br>Geo: Partial · Identity: Strong · Services: Partial</div></div>
+    </div>
+    <div class="legend-card lc-eps" data-vendor="Epsilon" onclick="toggleFocus(this)">
+      <div class="lc-swatch"></div>
+      <div><div class="lc-name">Epsilon</div><div class="lc-scores">Marketplace: Strong · Clean Room: Strong (IDC Leader 2025)<br>Geo: Limited · Identity: Strong · Services: Strong</div></div>
+    </div>
+    <div class="legend-card lc-lot" data-vendor="Lotame" onclick="toggleFocus(this)">
+      <div class="lc-swatch"></div>
+      <div><div class="lc-name">Lotame</div><div class="lc-scores">Marketplace: Partial · Clean Room: Limited<br>Geo: Strong (109 countries) · Identity: Partial · Services: Partial</div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-note">Tiers reflect analytical judgment based on public filings, product documentation, and press releases as of May 2026. Not investment advice. TransUnion connection disclosed: author worked at Neustar/TransUnion 2017–2021.</div>
+    <div class="footer-logo">CHRISHAWK</div>
+  </div>
+
+</div></div>
 </div>
 
 <script>
-  function scaleCanvas() {
-    var canvas = document.getElementById('canvas');
-    var vw = document.documentElement.clientWidth;
-    var canvasW = 1080;
-    if (vw < canvasW) {
-      var scale = vw / canvasW;
-      canvas.style.zoom = scale;
-      canvas.style.transform = '';
-      canvas.style.transformOrigin = '';
-      canvas.style.marginBottom = '';
-    } else {
-      canvas.style.zoom = '';
-      canvas.style.transform = '';
-      canvas.style.transformOrigin = '';
-      canvas.style.marginBottom = '';
-    }
-  }
-  scaleCanvas();
-  window.addEventListener('resize', scaleCanvas);
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active');
+  scaleCanvases();
+}
+
+function scaleCanvases(){
+  var vw=document.documentElement.clientWidth, cw=1080;
+  ['canvas-grid','canvas-radar'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el) el.style.zoom=vw<cw?vw/cw:'';
+  });
+}
+scaleCanvases();
+window.addEventListener('resize',scaleCanvases);
+
+/* RADAR */
+const dims=["Data\nMarketplace","Clean Room\nTech","Geo\nCoverage","Identity\nCoverage","Services\nCapabilities"];
+const vendors=[
+  {id:"TransUnion",color:"#3a8fd4",scores:[2,1,1,2,2]},
+  {id:"Experian",  color:"#e03a2a",scores:[2,1,2,2,1]},
+  {id:"ID5",       color:"#2db872",scores:[0,0,2,1,0]},
+  {id:"LiveRamp",  color:"#f5a623",scores:[2,2,1,2,1]},
+  {id:"Epsilon",   color:"#a066e8",scores:[2,2,0,2,2]},
+  {id:"Lotame",    color:"#e85d8a",scores:[1,0,2,1,1]},
+];
+const svg=document.getElementById("radar"),W=860,H=620,cx=W/2,cy=H/2-10,R=220,N=5,MAX=2,ns="http://www.w3.org/2000/svg";
+let active=null;
+const vg={};
+function pxy(a,r){const b=a-Math.PI/2;return[cx+r*Math.cos(b),cy+r*Math.sin(b)];}
+function da(i){return 2*Math.PI*i/N;}
+
+[2,1,0].forEach((ring,idx)=>{
+  const r=R*(ring+1)/(MAX+1);
+  const fills=["rgba(239,68,68,0.06)","rgba(245,158,11,0.06)","rgba(16,185,129,0.06)"];
+  const lbls=["Limited","Partial","Strong"];
+  const lcs=["#EF444488","#F59E0B88","#10B98188"];
+  const pts=Array.from({length:N},(_,i)=>{const[x,y]=pxy(da(i),r);return`${x},${y}`;}).join(" ");
+  const p=document.createElementNS(ns,"polygon");
+  p.setAttribute("points",pts);p.setAttribute("fill",fills[idx]);p.setAttribute("stroke","#CBD5E1");p.setAttribute("stroke-width","1");
+  svg.appendChild(p);
+  const[lx,ly]=pxy(da(0),r);
+  const t=document.createElementNS(ns,"text");
+  t.setAttribute("x",lx+6);t.setAttribute("y",ly+3);t.setAttribute("font-family","Montserrat,sans-serif");
+  t.setAttribute("font-size","9");t.setAttribute("font-weight","600");t.setAttribute("fill",lcs[2-ring]);
+  t.setAttribute("letter-spacing","0.08em");t.textContent=lbls[ring].toUpperCase();svg.appendChild(t);
+});
+
+for(let i=0;i<N;i++){
+  const[x,y]=pxy(da(i),R);const l=document.createElementNS(ns,"line");
+  l.setAttribute("x1",cx);l.setAttribute("y1",cy);l.setAttribute("x2",x);l.setAttribute("y2",y);
+  l.setAttribute("stroke","#94A3B8");l.setAttribute("stroke-width","1");svg.appendChild(l);
+}
+
+vendors.forEach(v=>{
+  const g=document.createElementNS(ns,"g");g.setAttribute("class","vendor-group");g.setAttribute("data-vendor",v.id);
+  const pts=v.scores.map((s,i)=>{const r=R*s/MAX;const[x,y]=pxy(da(i),r);return`${x},${y}`;}).join(" ");
+  const p=document.createElementNS(ns,"polygon");p.setAttribute("points",pts);p.setAttribute("fill",v.color+"22");
+  p.setAttribute("stroke",v.color);p.setAttribute("stroke-width","2");p.setAttribute("stroke-linejoin","round");g.appendChild(p);
+  v.scores.forEach((s,i)=>{
+    const r=R*s/MAX;if(r===0)return;
+    const[x,y]=pxy(da(i),r);const d=document.createElementNS(ns,"circle");
+    d.setAttribute("cx",x);d.setAttribute("cy",y);d.setAttribute("r","4");
+    d.setAttribute("fill",v.color);d.setAttribute("stroke","#FFFFFF");d.setAttribute("stroke-width","1.5");g.appendChild(d);
+  });
+  g.addEventListener("click",()=>{const c=document.querySelector(`.legend-card[data-vendor="${v.id}"]`);toggleFocus(c);});
+  svg.appendChild(g);vg[v.id]=g;
+});
+
+dims.forEach((dim,i)=>{
+  const[x,y]=pxy(da(i),R+32);const lines=dim.split("\n");const g=document.createElementNS(ns,"g");
+  const ad=(da(i)*180)/Math.PI;
+  let anc="middle";if(ad>10&&ad<170)anc="start";if(ad>190&&ad<350)anc="end";
+  lines.forEach((ln,li)=>{
+    const t=document.createElementNS(ns,"text");
+    t.setAttribute("x",x);t.setAttribute("y",y+li*14-(lines.length-1)*7);t.setAttribute("text-anchor",anc);
+    t.setAttribute("font-family","Montserrat,sans-serif");t.setAttribute("font-size","11");t.setAttribute("font-weight","700");
+    t.setAttribute("fill","#334155");t.setAttribute("letter-spacing","0.06em");t.textContent=ln.toUpperCase();g.appendChild(t);
+  });svg.appendChild(g);
+});
+const cd=document.createElementNS(ns,"circle");cd.setAttribute("cx",cx);cd.setAttribute("cy",cy);cd.setAttribute("r","3");cd.setAttribute("fill","#94A3B8");svg.appendChild(cd);
+
+function toggleFocus(card){
+  const vid=card.dataset.vendor;
+  if(active===vid){resetFocus();return;}
+  active=vid;document.getElementById("resetBtn").classList.add("visible");
+  vendors.forEach(v=>{
+    const g=vg[v.id],p=g.querySelector("polygon"),ds=g.querySelectorAll("circle");
+    if(v.id===vid){svg.appendChild(g);p.setAttribute("fill",v.color+"33");p.setAttribute("stroke-width","3");p.style.opacity="1";ds.forEach(d=>{d.style.opacity="1";d.setAttribute("r","5");});}
+    else{p.setAttribute("stroke-width","1");p.style.opacity="0.06";ds.forEach(d=>{d.style.opacity="0.05";});}
+  });
+  document.querySelectorAll(".legend-card").forEach(c=>{c.classList.toggle("active",c.dataset.vendor===vid);c.classList.toggle("dimmed",c.dataset.vendor!==vid);});
+}
+function resetFocus(){
+  active=null;document.getElementById("resetBtn").classList.remove("visible");
+  vendors.forEach(v=>{const g=vg[v.id],p=g.querySelector("polygon"),ds=g.querySelectorAll("circle");p.setAttribute("fill",v.color+"22");p.setAttribute("stroke-width","2");p.style.opacity="1";ds.forEach(d=>{d.style.opacity="1";d.setAttribute("r","4");});});
+  document.querySelectorAll(".legend-card").forEach(c=>c.classList.remove("active","dimmed"));
+}
 </script>
 </body>
 </html>
