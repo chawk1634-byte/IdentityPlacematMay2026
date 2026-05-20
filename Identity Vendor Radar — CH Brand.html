@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Identity Vendor Placemat — Capability Radar</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* ── CH BRAND SYSTEM ── */
+    --bg:           #E4E9EF;
+    --surface:      #FFFFFF;
+    --surface2:     #F1F5F9;
+    --rule:         #CBD5E1;
+    --rule-bright:  #2563EB;
+    --text:         #0F172A;
+    --muted:        #64748B;
+    --muted2:       #94A3B8;
+    --brand:        #2563EB;
+    --brand-light:  #BFD4FF;
+    --brand-dark:   #1E3A5F;
+
+    /* Vendor colors */
+    --tu:  #3a8fd4;
+    --exp: #e03a2a;
+    --id5: #2db872;
+    --lr:  #f5a623;
+    --eps: #a066e8;
+    --lot: #e85d8a;
+
+    /* Tier colors */
+    --strong:  #10B981;
+    --partial: #F59E0B;
+    --limited: #EF4444;
+
+    --display: 'Montserrat', sans-serif;
+    --body:    'Open Sans', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+
+  /* ── RESPONSIVE SCALING ── */
+  .scale-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: visible;
+  }
+
+  .canvas {
+    width: 1080px;
+    min-height: 1350px;
+    background: var(--bg);
+    padding: 52px 52px 44px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Brand accent bar */
+  .canvas::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--brand) 0%, var(--brand-light) 60%, transparent 100%);
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .kicker {
+    font-family: var(--display);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--brand);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .kicker::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--brand);
+    border-radius: 1px;
+  }
+
+  .headline {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 62px;
+    line-height: 1.0;
+    letter-spacing: -.01em;
+    color: var(--text);
+  }
+
+  .headline em {
+    font-style: normal;
+    color: var(--brand);
+  }
+
+  .header-right {
+    text-align: right;
+    padding-top: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+
+  .ch-badge {
+    width: 44px;
+    height: 44px;
+    background: var(--brand);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--display);
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    margin-left: auto;
+  }
+
+  .date-label {
+    font-family: var(--display);
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+  }
+
+  /* ── TIER KEY ── */
+  .tier-key {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 20px;
+    align-items: center;
+    padding: 10px 14px;
+    background: var(--surface);
+    border-left: 2px solid var(--brand);
+    border-radius: 0 4px 4px 0;
+    width: fit-content;
+  }
+
+  .tk-label {
+    font-family: var(--display);
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .16em;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+
+  .tk-items {
+    display: flex;
+    gap: 20px;
+  }
+
+  .tk-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--display);
+    font-size: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--muted);
+  }
+
+  .tk-ring {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1.5px solid currentColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    font-family: var(--display);
+    flex-shrink: 0;
+  }
+
+  .tk-strong  { color: #10B981; }
+  .tk-partial { color: #F59E0B; }
+  .tk-limited { color: #EF4444; }
+
+  .reset-btn {
+    display: none;
+    font-family: var(--display);
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--rule);
+    padding: 5px 14px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: color .15s, border-color .15s;
+    margin-left: auto;
+  }
+  .reset-btn:hover { color: var(--brand); border-color: var(--brand); }
+  .reset-btn.visible { display: block; }
+
+  /* ── RADAR CONTAINER ── */
+  .radar-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 8px 0 16px;
+    flex: 1;
+  }
+
+  svg { overflow: visible; }
+
+  /* ── LEGEND GRID ── */
+  .legend-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+    margin-bottom: 24px;
+  }
+
+  .legend-card {
+    background: var(--surface);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-left: 3px solid transparent;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background .18s ease, opacity .22s ease, box-shadow .18s ease;
+  }
+  .legend-card:hover { background: var(--surface2); }
+  .legend-card.active {
+    background: var(--surface2);
+    box-shadow: 0 0 0 1px var(--rule-bright);
+  }
+  .legend-card.dimmed { opacity: .25; }
+
+  .lc-tu  { border-color: var(--tu); }
+  .lc-exp { border-color: var(--exp); }
+  .lc-id5 { border-color: var(--id5); }
+  .lc-lr  { border-color: var(--lr); }
+  .lc-eps { border-color: var(--eps); }
+  .lc-lot { border-color: var(--lot); }
+
+  .lc-swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    opacity: .3;
+    flex-shrink: 0;
+  }
+
+  .lc-tu  .lc-swatch { background: var(--tu); }
+  .lc-exp .lc-swatch { background: var(--exp); }
+  .lc-id5 .lc-swatch { background: var(--id5); }
+  .lc-lr  .lc-swatch { background: var(--lr); }
+  .lc-eps .lc-swatch { background: var(--eps); }
+  .lc-lot .lc-swatch { background: var(--lot); }
+
+  .lc-name {
+    font-family: var(--display);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: 4px;
+  }
+
+  .lc-tu  .lc-name { color: var(--tu); }
+  .lc-exp .lc-name { color: var(--exp); }
+  .lc-id5 .lc-name { color: var(--id5); }
+  .lc-lr  .lc-name { color: var(--lr); }
+  .lc-eps .lc-name { color: var(--eps); }
+  .lc-lot .lc-name { color: var(--lot); }
+
+  .lc-scores {
+    font-family: var(--body);
+    font-size: 9px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .footer-note {
+    font-family: var(--body);
+    font-size: 8px;
+    color: var(--muted2);
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  .footer-logo {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--brand);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  /* Vendor group interactions */
+  .vendor-group { cursor: pointer; }
+  .vendor-group polygon,
+  .vendor-group circle {
+    transition: opacity .22s ease, stroke-width .22s ease;
+  }
+</style>
+</head>
+<body>
+<div class="scale-wrapper">
+<div class="canvas" id="canvas">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <div class="kicker">Identity Vendor Analysis · Part II</div>
+      <div class="headline">CAPABILITY<br><em>RADAR</em></div>
+    </div>
+    <div class="header-right">
+      <div class="ch-badge">CH</div>
+      <div class="date-label">May 2026</div>
+    </div>
+  </div>
+
+  <!-- TIER KEY -->
+  <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+    <div class="tier-key">
+      <span class="tk-label">Tier scoring —</span>
+      <div class="tk-items">
+        <div class="tk-item tk-strong"><div class="tk-ring">2</div> Strong</div>
+        <div class="tk-item tk-partial"><div class="tk-ring">1</div> Partial</div>
+        <div class="tk-item tk-limited"><div class="tk-ring">0</div> Limited</div>
+      </div>
+    </div>
+    <span style="font-family:var(--display);font-size:8px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);">Click any vendor to isolate</span>
+    <button class="reset-btn" id="resetBtn" onclick="resetFocus()">Reset</button>
+  </div>
+
+  <!-- RADAR SVG -->
+  <div class="radar-wrap">
+    <svg id="radar" width="860" height="620" viewBox="0 0 860 620"></svg>
+  </div>
+
+  <!-- LEGEND GRID -->
+  <div class="legend-grid">
+    <div class="legend-card lc-tu" data-vendor="TransUnion" onclick="toggleFocus(this)">
+      <div class="lc-swatch"></div>
+      <div class="lc-info">
+        <div class="lc-name">TransUnion</div>
+        <div class="lc-scores">Marketplace: Strong (130K+ segments) · Clean Room: Partial<br>Geo: Partial · Identity: Strong · Services: Strong</div>
+      </div>
+    </div>
+    <div class="legend-card lc-exp" data-vendor="Experian" onclick="toggleFocus(this)">
+      <div class="lc-swatch"></div>
+      <div class="lc-info">
+        <div class="lc-name">Experian</div>
+        <div class="lc-scores">Marketplace: Strong · Clean Room: Partial<br>Geo: Strong · Identity: Strong · Services: Partial</div>
+      </div>
+    </div>
+    <div class="legend-card lc-id5" data-vendor="ID5" onclick="toggleFocus(this)">
+      <div class="lc-swatch"></div>
+      <div class="lc-info">
+        <div class="lc-name">ID5</div>
+        <div class="lc-scores">Marketplace: Limited · Clean Room: Limited<br>Geo: Strong · Identity: Partial · Services: Limited</div>
+      </div>
+    </div>
+    <div class="legend-card lc-lr" data-vendor="LiveRamp" onclick="toggleFocus(this)">
+      <div class="lc-swatch"></div>
+      <div class="lc-info">
+        <div class="lc-name">LiveRamp</div>
+        <div class="lc-scores">Marketplace: Strong · Clean Room: Strong (Safe Haven / Habu)<br>Geo: Partial · Identity: Strong · Services: Partial</div>
+      </div>
+    </div>
+    <div class="legend-card lc-eps" data-vendor="Epsilon" onclick="toggleFocus(this)">
+      <div class="lc-swatch"></div>
+      <div class="lc-info">
+        <div class="lc-name">Epsilon</div>
+        <div class="lc-scores">Marketplace: Strong · Clean Room: Strong (IDC Leader 2025)<br>Geo: Limited · Identity: Strong · Services: Strong</div>
+      </div>
+    </div>
+    <div class="legend-card lc-lot" data-vendor="Lotame" onclick="toggleFocus(this)">
+      <div class="lc-swatch"></div>
+      <div class="lc-info">
+        <div class="lc-name">Lotame</div>
+        <div class="lc-scores">Marketplace: Partial · Clean Room: Limited<br>Geo: Strong (109 countries) · Identity: Partial · Services: Partial</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-note">Tiers reflect analytical judgment based on public filings, product documentation, and press releases as of May 2026. Not investment advice. TransUnion connection disclosed: author worked at Neustar/TransUnion 2017–2021.</div>
+    <div class="footer-logo">CHRISHAWK</div>
+  </div>
+
+</div>
+</div>
+
+<script>
+const dimensions = ["Data\nMarketplace","Clean Room\nTech","Geo\nCoverage","Identity\nCoverage","Services\nCapabilities"];
+
+const vendors = [
+  { id: "TransUnion", color: "#3a8fd4", scores: [2, 1, 1, 2, 2] },
+  { id: "Experian",   color: "#e03a2a", scores: [2, 1, 2, 2, 1] },
+  { id: "ID5",        color: "#2db872", scores: [0, 0, 2, 1, 0] },
+  { id: "LiveRamp",   color: "#f5a623", scores: [2, 2, 1, 2, 1] },
+  { id: "Epsilon",    color: "#a066e8", scores: [2, 2, 0, 2, 2] },
+  { id: "Lotame",     color: "#e85d8a", scores: [1, 0, 2, 1, 1] },
+];
+
+const svgEl = document.getElementById("radar");
+const W = 860, H = 620;
+const cx = W / 2, cy = H / 2 - 10;
+const R = 220;
+const N = dimensions.length;
+const MAX = 2;
+const ns = "http://www.w3.org/2000/svg";
+
+let activeVendor = null;
+const vendorGroups = {};
+
+function polarToXY(angle, r) {
+  const a = angle - Math.PI / 2;
+  return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+}
+function dimAngle(i) { return (2 * Math.PI * i) / N; }
+
+// ── BACKGROUND RINGS ──
+const ringFills  = [
+  "rgba(239,68,68,0.06)",    // Limited — innermost
+  "rgba(245,158,11,0.06)",   // Partial — middle
+  "rgba(16,185,129,0.06)"    // Strong  — outermost
+];
+const ringLabels      = ["Limited", "Partial", "Strong"];
+const ringLabelColors = ["#EF444488", "#F59E0B88", "#10B98188"];
+
+[2, 1, 0].forEach((ring, idx) => {
+  const r = R * (ring + 1) / (MAX + 1);
+  const pts = Array.from({length: N}, (_, i) => {
+    const [x, y] = polarToXY(dimAngle(i), r);
+    return `${x},${y}`;
+  }).join(" ");
+
+  const poly = document.createElementNS(ns, "polygon");
+  poly.setAttribute("points", pts);
+  poly.setAttribute("fill", ringFills[idx]);
+  poly.setAttribute("stroke", "#CBD5E1");
+  poly.setAttribute("stroke-width", "1");
+  svgEl.appendChild(poly);
+
+  const [lx, ly] = polarToXY(dimAngle(0), r);
+  const lbl = document.createElementNS(ns, "text");
+  lbl.setAttribute("x", lx + 6);
+  lbl.setAttribute("y", ly + 3);
+  lbl.setAttribute("font-family", "Montserrat, sans-serif");
+  lbl.setAttribute("font-size", "9");
+  lbl.setAttribute("font-weight", "600");
+  lbl.setAttribute("fill", ringLabelColors[2 - ring]);
+  lbl.setAttribute("letter-spacing", "0.08em");
+  lbl.textContent = ringLabels[ring].toUpperCase();
+  svgEl.appendChild(lbl);
+});
+
+// ── SPOKES ──
+for (let i = 0; i < N; i++) {
+  const [x, y] = polarToXY(dimAngle(i), R);
+  const line = document.createElementNS(ns, "line");
+  line.setAttribute("x1", cx); line.setAttribute("y1", cy);
+  line.setAttribute("x2", x);  line.setAttribute("y2", y);
+  line.setAttribute("stroke", "#94A3B8");
+  line.setAttribute("stroke-width", "1");
+  svgEl.appendChild(line);
+}
+
+// ── VENDOR GROUPS ──
+vendors.forEach(v => {
+  const g = document.createElementNS(ns, "g");
+  g.setAttribute("class", "vendor-group");
+  g.setAttribute("data-vendor", v.id);
+  g.style.cursor = "pointer";
+
+  const pts = v.scores.map((s, i) => {
+    const r = R * s / MAX;
+    const [x, y] = polarToXY(dimAngle(i), r);
+    return `${x},${y}`;
+  }).join(" ");
+
+  const poly = document.createElementNS(ns, "polygon");
+  poly.setAttribute("points", pts);
+  poly.setAttribute("fill", v.color + "22");
+  poly.setAttribute("stroke", v.color);
+  poly.setAttribute("stroke-width", "2");
+  poly.setAttribute("stroke-linejoin", "round");
+  poly.style.transition = "fill-opacity .22s, stroke-opacity .22s, stroke-width .22s";
+  g.appendChild(poly);
+
+  v.scores.forEach((s, i) => {
+    const r = R * s / MAX;
+    if (r === 0) return;
+    const [x, y] = polarToXY(dimAngle(i), r);
+    const dot = document.createElementNS(ns, "circle");
+    dot.setAttribute("cx", x);
+    dot.setAttribute("cy", y);
+    dot.setAttribute("r", "4");
+    dot.setAttribute("fill", v.color);
+    dot.setAttribute("stroke", "#FFFFFF");
+    dot.setAttribute("stroke-width", "1.5");
+    dot.style.transition = "opacity .22s";
+    g.appendChild(dot);
+  });
+
+  g.addEventListener("click", () => {
+    const card = document.querySelector(`.legend-card[data-vendor="${v.id}"]`);
+    toggleFocus(card);
+  });
+
+  svgEl.appendChild(g);
+  vendorGroups[v.id] = g;
+});
+
+// ── DIMENSION LABELS ──
+const labelOffset = 32;
+dimensions.forEach((dim, i) => {
+  const [x, y] = polarToXY(dimAngle(i), R + labelOffset);
+  const lines = dim.split("\n");
+  const g = document.createElementNS(ns, "g");
+  const angle = dimAngle(i);
+  const angleDeg = (angle * 180) / Math.PI;
+  let anchor = "middle";
+  if (angleDeg > 10 && angleDeg < 170) anchor = "start";
+  if (angleDeg > 190 && angleDeg < 350) anchor = "end";
+
+  lines.forEach((line, li) => {
+    const t = document.createElementNS(ns, "text");
+    t.setAttribute("x", x);
+    t.setAttribute("y", y + li * 14 - (lines.length - 1) * 7);
+    t.setAttribute("text-anchor", anchor);
+    t.setAttribute("font-family", "Montserrat, sans-serif");
+    t.setAttribute("font-size", "11");
+    t.setAttribute("font-weight", "700");
+    t.setAttribute("fill", "#334155");
+    t.setAttribute("letter-spacing", "0.06em");
+    t.textContent = line.toUpperCase();
+    g.appendChild(t);
+  });
+  svgEl.appendChild(g);
+});
+
+// Center dot
+const cDot = document.createElementNS(ns, "circle");
+cDot.setAttribute("cx", cx); cDot.setAttribute("cy", cy);
+cDot.setAttribute("r", "3"); cDot.setAttribute("fill", "#94A3B8");
+svgEl.appendChild(cDot);
+
+// ── INTERACTION ──
+function toggleFocus(card) {
+  const vendorId = card.dataset.vendor;
+  if (activeVendor === vendorId) { resetFocus(); return; }
+
+  activeVendor = vendorId;
+  document.getElementById("resetBtn").classList.add("visible");
+
+  vendors.forEach(v => {
+    const g = vendorGroups[v.id];
+    const poly = g.querySelector("polygon");
+    const dots = g.querySelectorAll("circle");
+
+    if (v.id === vendorId) {
+      svgEl.appendChild(g);
+      poly.setAttribute("fill", v.color + "33");
+      poly.setAttribute("stroke-width", "3");
+      poly.style.opacity = "1";
+      dots.forEach(d => { d.style.opacity = "1"; d.setAttribute("r", "5"); });
+    } else {
+      poly.setAttribute("stroke-width", "1");
+      poly.style.opacity = "0.06";
+      dots.forEach(d => { d.style.opacity = "0.05"; });
+    }
+  });
+
+  document.querySelectorAll(".legend-card").forEach(c => {
+    c.classList.toggle("active", c.dataset.vendor === vendorId);
+    c.classList.toggle("dimmed", c.dataset.vendor !== vendorId);
+  });
+}
+
+function resetFocus() {
+  activeVendor = null;
+  document.getElementById("resetBtn").classList.remove("visible");
+
+  vendors.forEach(v => {
+    const g = vendorGroups[v.id];
+    const poly = g.querySelector("polygon");
+    const dots = g.querySelectorAll("circle");
+    poly.setAttribute("fill", v.color + "22");
+    poly.setAttribute("stroke-width", "2");
+    poly.style.opacity = "1";
+    dots.forEach(d => { d.style.opacity = "1"; d.setAttribute("r", "4"); });
+  });
+
+  document.querySelectorAll(".legend-card").forEach(c => {
+    c.classList.remove("active", "dimmed");
+  });
+}
+
+// ── MOBILE SCALING ──
+function scaleCanvas() {
+  var canvas = document.getElementById('canvas');
+  var vw = document.documentElement.clientWidth;
+  var canvasW = 1080;
+  if (vw < canvasW) {
+    canvas.style.zoom = vw / canvasW;
+  } else {
+    canvas.style.zoom = '';
+  }
+}
+scaleCanvas();
+window.addEventListener('resize', scaleCanvas);
+</script>
+
+</body>
+</html>
