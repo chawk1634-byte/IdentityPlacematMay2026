@@ -50,7 +50,6 @@
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
-    overflow-x: hidden;
   }
 
   /* ── RESPONSIVE SCALING ── */
@@ -59,13 +58,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-  }
-
-  @media (max-width: 1120px) {
-    .scale-wrapper {
-      overflow-x: auto;
-      justify-content: flex-start;
-    }
+    overflow: visible;
   }
 
   /* ── CANVAS: 4:5 ratio, 1080×1350 equivalent ── */
@@ -644,15 +637,17 @@
 
 <script>
   function scaleCanvas() {
-    const canvas = document.getElementById('canvas');
-    const vw = window.innerWidth;
-    const canvasW = 1080;
+    var canvas = document.getElementById('canvas');
+    var vw = document.documentElement.clientWidth;
+    var canvasW = 1080;
     if (vw < canvasW) {
-      const scale = vw / canvasW;
-      canvas.style.transform = 'scale(' + scale + ')';
-      canvas.style.transformOrigin = 'top left';
-      canvas.style.marginBottom = '-' + (canvas.offsetHeight * (1 - scale)) + 'px';
+      var scale = vw / canvasW;
+      canvas.style.zoom = scale;
+      canvas.style.transform = '';
+      canvas.style.transformOrigin = '';
+      canvas.style.marginBottom = '';
     } else {
+      canvas.style.zoom = '';
       canvas.style.transform = '';
       canvas.style.transformOrigin = '';
       canvas.style.marginBottom = '';
