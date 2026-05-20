@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Identity Vendor Placemat — Capability Grid</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* ── CH BRAND SYSTEM ── */
+    --bg:           #E4E9EF;   /* light cool grey canvas */
+    --surface:      #FFFFFF;   /* white cards */
+    --surface2:     #F1F5F9;   /* CH Surface — row label bg */
+    --rule:         #CBD5E1;   /* light dividers */
+    --rule-bright:  #2563EB;   /* CH Electric Blue — key accents */
+    --text:         #0F172A;   /* CH Dark Navy — primary text */
+    --muted:        #64748B;   /* CH Slate Gray */
+    --muted2:       #94A3B8;   /* lighter slate */
+    --brand:        #2563EB;   /* CH Electric Blue — primary */
+    --brand-light:  #BFD4FF;   /* CH Light Blue — tints */
+    --brand-dark:   #1E3A5F;   /* CH Dark Blue — accents */
+
+    /* Vendor colors — kept to identify third-party companies */
+    --tu:  #3a8fd4;
+    --exp: #e03a2a;
+    --id5: #2db872;
+    --lr:  #f5a623;
+    --eps: #a066e8;
+    --lot: #e85d8a;
+
+    /* Tier colors — semantic / universal */
+    --strong:      #10B981;
+    --partial:     #F59E0B;
+    --limited:     #EF4444;
+    --strong-bg:   rgba(16,185,129,.12);
+    --partial-bg:  rgba(245,158,11,.12);
+    --limited-bg:  rgba(239,68,68,.10);
+
+    --display: 'Montserrat', sans-serif;
+    --body:    'Open Sans', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── RESPONSIVE SCALING ── */
+  .scale-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  @media (max-width: 1120px) {
+    .scale-wrapper {
+      overflow-x: auto;
+      justify-content: flex-start;
+    }
+  }
+
+  /* ── CANVAS: 4:5 ratio, 1080×1350 equivalent ── */
+  .canvas {
+    width: 1080px;
+    min-height: 1350px;
+    background: var(--bg);
+    position: relative;
+    padding: 52px 52px 44px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Brand accent bar — top edge */
+  .canvas::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--brand) 0%, var(--brand-light) 60%, transparent 100%);
+  }
+
+  /* No background texture */
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .header-left { flex: 1; }
+
+  .kicker {
+    font-family: var(--display);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--brand);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .kicker::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--brand);
+    border-radius: 1px;
+  }
+
+  .headline {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 62px;
+    line-height: 1.0;
+    letter-spacing: -.01em;
+    color: var(--text);
+  }
+
+  .headline em {
+    font-style: normal;
+    color: var(--brand);
+  }
+
+  .header-right {
+    text-align: right;
+    padding-top: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+
+  /* CH monogram badge */
+  .ch-badge {
+    width: 44px;
+    height: 44px;
+    background: var(--brand);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--display);
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    margin-left: auto;
+  }
+
+  .date-label {
+    font-family: var(--display);
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+  }
+
+  .byline {
+    font-family: var(--display);
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--brand-light);
+    letter-spacing: .08em;
+    opacity: .7;
+  }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 28px;
+    align-items: center;
+    padding: 10px 14px;
+    background: var(--surface);
+    border-left: 2px solid var(--brand);
+    border-radius: 0 4px 4px 0;
+    width: fit-content;
+  }
+
+  .legend-label {
+    font-family: var(--display);
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .16em;
+    color: var(--muted);
+    margin-right: 2px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--display);
+    font-size: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: var(--muted);
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .ld-strong  { background: var(--strong); }
+  .ld-partial { background: var(--partial); }
+  .ld-limited { background: var(--limited); }
+
+  /* ── VENDOR HEADER ROW ── */
+  .vendor-header {
+    display: grid;
+    grid-template-columns: 196px repeat(6, 1fr);
+    gap: 3px;
+    margin-bottom: 3px;
+  }
+
+  .vh-empty { }
+
+  .vh-cell {
+    background: var(--surface);
+    padding: 13px 11px 11px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-top: 3px solid transparent;
+    border-radius: 2px;
+  }
+
+  .vh-cell.tu  { border-color: var(--tu); }
+  .vh-cell.exp { border-color: var(--exp); }
+  .vh-cell.id5 { border-color: var(--id5); }
+  .vh-cell.lr  { border-color: var(--lr); }
+  .vh-cell.eps { border-color: var(--eps); }
+  .vh-cell.lot { border-color: var(--lot); }
+
+  .vh-name {
+    font-family: var(--display);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    line-height: 1.3;
+  }
+
+  .vh-cell.tu  .vh-name { color: var(--tu); }
+  .vh-cell.exp .vh-name { color: var(--exp); }
+  .vh-cell.id5 .vh-name { color: var(--id5); }
+  .vh-cell.lr  .vh-name { color: var(--lr); }
+  .vh-cell.eps .vh-name { color: var(--eps); }
+  .vh-cell.lot .vh-name { color: var(--lot); }
+
+  .vh-sub {
+    font-family: var(--body);
+    font-size: 8px;
+    font-weight: 400;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    line-height: 1.4;
+  }
+
+  /* ── GRID ROWS ── */
+  .grid-row {
+    display: grid;
+    grid-template-columns: 196px repeat(6, 1fr);
+    gap: 3px;
+    margin-bottom: 3px;
+  }
+
+  .grid-row:last-child { margin-bottom: 0; }
+
+  .row-label {
+    background: var(--surface2);
+    padding: 16px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    border-left: 2px solid var(--brand);
+    border-radius: 2px;
+  }
+
+  .row-label-title {
+    font-family: var(--display);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .row-label-desc {
+    font-family: var(--body);
+    font-size: 9.5px;
+    font-weight: 400;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+
+  .grid-cell {
+    padding: 14px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    justify-content: flex-start;
+    border-radius: 2px;
+  }
+
+  .grid-cell.strong  { background: var(--strong-bg);  border-bottom: 1px solid rgba(16,185,129,.15); }
+  .grid-cell.partial { background: var(--partial-bg);  border-bottom: 1px solid rgba(245,158,11,.15); }
+  .grid-cell.limited { background: var(--limited-bg);  border-bottom: 1px solid rgba(239,68,68,.12); }
+
+  .tier-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--display);
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    width: fit-content;
+  }
+
+  .tier-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .strong  .tier-badge { color: var(--strong);  }
+  .partial .tier-badge { color: var(--partial); }
+  .limited .tier-badge { color: var(--limited); }
+
+  .strong  .tier-badge::before { background: var(--strong); }
+  .partial .tier-badge::before { background: var(--partial); }
+  .limited .tier-badge::before { background: var(--limited); }
+
+  .cell-note {
+    font-family: var(--body);
+    font-size: 9.5px;
+    font-weight: 400;
+    color: #334155;
+    line-height: 1.5;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: auto;
+    padding-top: 22px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .footer-note {
+    font-family: var(--body);
+    font-size: 8px;
+    font-weight: 400;
+    color: var(--muted2);
+    letter-spacing: .03em;
+    line-height: 1.7;
+    max-width: 580px;
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+
+  .footer-logo {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--brand);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .footer-url {
+    font-family: var(--body);
+    font-size: 8px;
+    color: var(--muted2);
+    letter-spacing: .06em;
+  }
+</style>
+</head>
+<body>
+<div class="scale-wrapper">
+<div class="canvas" id="canvas">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="kicker">Identity Vendor Analysis · Part II</div>
+      <div class="headline">THE<br><em>IDENTITY</em><br>STACK MAP</div>
+    </div>
+    <div class="header-right">
+      <div class="ch-badge">CH</div>
+      <div class="date-label">May 2026</div>
+    </div>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <span class="legend-label">Tier key —</span>
+    <div class="legend-item"><div class="legend-dot ld-strong"></div> Strong</div>
+    <div class="legend-item"><div class="legend-dot ld-partial"></div> Partial</div>
+    <div class="legend-item"><div class="legend-dot ld-limited"></div> Limited</div>
+  </div>
+
+  <!-- VENDOR HEADER -->
+  <div class="vendor-header">
+    <div class="vh-empty"></div>
+    <div class="vh-cell tu">
+      <div class="vh-name">Trans&shy;Union</div>
+      <div class="vh-sub">TruAudience</div>
+    </div>
+    <div class="vh-cell exp">
+      <div class="vh-name">Experian</div>
+      <div class="vh-sub">Mktg Services</div>
+    </div>
+    <div class="vh-cell id5">
+      <div class="vh-name">ID5</div>
+      <div class="vh-sub">Adaptive ID</div>
+    </div>
+    <div class="vh-cell lr">
+      <div class="vh-name">Live&shy;Ramp</div>
+      <div class="vh-sub">RampID</div>
+    </div>
+    <div class="vh-cell eps">
+      <div class="vh-name">Epsilon</div>
+      <div class="vh-sub">CORE ID</div>
+    </div>
+    <div class="vh-cell lot">
+      <div class="vh-name">Lotame</div>
+      <div class="vh-sub">Panorama ID</div>
+    </div>
+  </div>
+
+  <!-- ROW 1: DATA MARKETPLACE -->
+  <div class="grid-row">
+    <div class="row-label">
+      <div class="row-label-title">Data Marketplace</div>
+      <div class="row-label-desc">Third-party data availability, segment library, activation reach</div>
+    </div>
+    <div class="grid-cell partial">
+      <div class="tier-badge">Partial</div>
+      <div class="cell-note">Hundreds of segments. Strong in fin-services &amp; auto. Fewer activation destinations than Experian.</div>
+    </div>
+    <div class="grid-cell strong">
+      <div class="tier-badge">Strong</div>
+      <div class="cell-note">3,200+ segments. 200+ destinations. Largest disclosed segment library of any neutral vendor.</div>
+    </div>
+    <div class="grid-cell limited">
+      <div class="tier-badge">Limited</div>
+      <div class="cell-note">No segment library. Identity infrastructure only — enables others' segments, doesn't sell its own.</div>
+    </div>
+    <div class="grid-cell strong">
+      <div class="tier-badge">Strong</div>
+      <div class="cell-note">25,000+ publisher data network. RampID powers data collaboration at ecosystem scale.</div>
+    </div>
+    <div class="grid-cell strong">
+      <div class="tier-badge">Strong</div>
+      <div class="cell-note">Abacus co-op + proprietary purchase data. Deep CPG, retail, and financial services coverage.</div>
+    </div>
+    <div class="grid-cell partial">
+      <div class="tier-badge">Partial</div>
+      <div class="cell-note">Third-party data partnerships via Panorama. Stronger on reach than data depth.</div>
+    </div>
+  </div>
+
+  <!-- ROW 2: CLEAN ROOM TECH -->
+  <div class="grid-row">
+    <div class="row-label">
+      <div class="row-label-title">Clean Room Tech</div>
+      <div class="row-label-desc">Native clean room product or deep integration for privacy-safe collaboration</div>
+    </div>
+    <div class="grid-cell partial">
+      <div class="tier-badge">Partial</div>
+      <div class="cell-note">TruAudience includes a named clean room product built on OneTru. Real product, but not a market-leading platform at LiveRamp's scale.</div>
+    </div>
+    <div class="grid-cell partial">
+      <div class="tier-badge">Partial</div>
+      <div class="cell-note">"Identity as a service" inside client-preferred clean rooms. Agnostic integrator, not a native platform.</div>
+    </div>
+    <div class="grid-cell limited">
+      <div class="tier-badge">Limited</div>
+      <div class="cell-note">No clean room product. ID5 ID used within partner clean room environments as the identity layer.</div>
+    </div>
+    <div class="grid-cell strong">
+      <div class="tier-badge">Strong</div>
+      <div class="cell-note">Safe Haven — built on the Habu acquisition — is one of the deepest clean room ecosystems in market. 150% YoY adoption growth in 2024, 300+ brands and publishers.</div>
+    </div>
+    <div class="grid-cell strong">
+      <div class="tier-badge">Strong</div>
+      <div class="cell-note">Epsilon PeopleCloud Clean Room named a Leader in IDC MarketScape 2025. Preloaded with CORE ID and 200M+ profiles. Full product, not a feature.</div>
+    </div>
+    <div class="grid-cell limited">
+      <div class="tier-badge">Limited</div>
+      <div class="cell-note">Supports clean room use cases via Panorama ID. No proprietary clean room infrastructure.</div>
+    </div>
+  </div>
+
+  <!-- ROW 3: GEO COVERAGE -->
+  <div class="grid-row">
+    <div class="row-label">
+      <div class="row-label-title">Geo Coverage</div>
+      <div class="row-label-desc">International identity and data depth outside the United States</div>
+    </div>
+    <div class="grid-cell partial">
+      <div class="tier-badge">Partial</div>
+      <div class="cell-note">30+ countries. US-dominant in marketing identity. International bureau ops serve credit, not marketing.</div>
+    </div>
+    <div class="grid-cell strong">
+      <div class="tier-badge">Strong</div>
+      <div class="cell-note">WorldView covers 130+ countries with consistent consumer data. Strongest international coverage of all six.</div>
+    </div>
+    <div class="grid-cell strong">
+      <div class="tier-badge">Strong</div>
+      <div class="cell-note">EU-native GDPR design. 1.5B users / 665M HH post-TrueData. Strong EMEA and APAC footprint.</div>
+    </div>
+    <div class="grid-cell partial">
+      <div class="tier-badge">Partial</div>
+      <div class="cell-note">Global reach via partnerships. 94% of revenue is US-based. International depth is limited.</div>
+    </div>
+    <div class="grid-cell limited">
+      <div class="tier-badge">Limited</div>
+      <div class="cell-note">97% US revenue. Epsilon's data and modeling heritage is almost entirely domestic.</div>
+    </div>
+    <div class="grid-cell strong">
+      <div class="tier-badge">Strong</div>
+      <div class="cell-note">Panorama ID spans 109 countries. The strongest international alternative ID of the Publicis stack.</div>
+    </div>
+  </div>
+
+  <!-- ROW 4: IDENTITY COVERAGE -->
+  <div class="grid-row">
+    <div class="row-label">
+      <div class="row-label-title">Identity Coverage</div>
+      <div class="row-label-desc">Depth, scale, and uniqueness of identity graph and resolution methodology</div>
+    </div>
+    <div class="grid-cell strong">
+      <div class="tier-badge">Strong</div>
+      <div class="cell-note">98% US adult coverage. Credit + telecom anchor. 99.5% persistence. Unique regulated data moat.</div>
+    </div>
+    <div class="grid-cell strong">
+      <div class="tier-badge">Strong</div>
+      <div class="cell-note">250M individuals, 4B+ digital IDs. Largest disclosed digital ID count of any neutral vendor.</div>
+    </div>
+    <div class="grid-cell partial">
+      <div class="tier-badge">Partial</div>
+      <div class="cell-note">Probabilistic, cookieless-native. No offline anchor. Strongest where other IDs produce zero signal.</div>
+    </div>
+    <div class="grid-cell strong">
+      <div class="tier-badge">Strong</div>
+      <div class="cell-note">RampID: deterministic, PII-based. Deep publisher network drives scale. Industry-standard onboarding.</div>
+    </div>
+    <div class="grid-cell strong">
+      <div class="tier-badge">Strong</div>
+      <div class="cell-note">CORE ID anchored to verified PII with purchase signal depth. Best-in-class for loyalty/CRM use cases.</div>
+    </div>
+    <div class="grid-cell partial">
+      <div class="tier-badge">Partial</div>
+      <div class="cell-note">Cookieless Panorama ID strong on open-web reach. Less deterministic depth than bureau or CORE ID.</div>
+    </div>
+  </div>
+
+  <!-- ROW 5: SERVICES CAPABILITIES -->
+  <div class="grid-row">
+    <div class="row-label">
+      <div class="row-label-title">Services Capabilities</div>
+      <div class="row-label-desc">Measurement, analytics, managed services, and AI-layer depth</div>
+    </div>
+    <div class="grid-cell strong">
+      <div class="tier-badge">Strong</div>
+      <div class="cell-note">Native MMM + MTA (Neustar). TruIQ AI analytics. Credit-informed attribution. Full managed service.</div>
+    </div>
+    <div class="grid-cell partial">
+      <div class="tier-badge">Partial</div>
+      <div class="cell-note">Identity infrastructure for measurement. No native MMM/MTA. Powers VideoAmp, MiQ, AdRoll. Managed service available.</div>
+    </div>
+    <div class="grid-cell limited">
+      <div class="tier-badge">Limited</div>
+      <div class="cell-note">Technical integration model. No managed services, no measurement platform. Identity infrastructure only.</div>
+    </div>
+    <div class="grid-cell strong">
+      <div class="tier-badge">Strong</div>
+      <div class="cell-note">Safe Haven analytics, data collaboration services, and consultative deployment. Strong agency relationships.</div>
+    </div>
+    <div class="grid-cell strong">
+      <div class="tier-badge">Strong</div>
+      <div class="cell-note">Full-stack: targeting, measurement, Epsilon Digital agency, Epsilon PeopleCloud platform. Deepest service layer of the six.</div>
+    </div>
+    <div class="grid-cell partial">
+      <div class="tier-badge">Partial</div>
+      <div class="cell-note">Data enrichment and audience services. Less deep analytics and measurement bench than LiveRamp or Epsilon.</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-note">Tiers reflect analytical judgment based on public filings, product documentation, and press releases as of May 2026. Not investment advice. TransUnion connection disclosed: author worked at Neustar/TransUnion 2017–2021.</div>
+    <div class="footer-brand">
+      <div class="footer-logo">CHRISHAWK</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+  function scaleCanvas() {
+    const canvas = document.getElementById('canvas');
+    const vw = window.innerWidth;
+    const canvasW = 1080;
+    if (vw < canvasW) {
+      const scale = vw / canvasW;
+      canvas.style.transform = 'scale(' + scale + ')';
+      canvas.style.transformOrigin = 'top left';
+      canvas.style.marginBottom = '-' + (canvas.offsetHeight * (1 - scale)) + 'px';
+    } else {
+      canvas.style.transform = '';
+      canvas.style.transformOrigin = '';
+      canvas.style.marginBottom = '';
+    }
+  }
+  scaleCanvas();
+  window.addEventListener('resize', scaleCanvas);
+</script>
+</body>
+</html>
