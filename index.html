@@ -47,6 +47,24 @@
   .tab-btn:hover { color: var(--brand); }
   .tab-btn.active { color: var(--brand); border-bottom-color: var(--brand); }
 
+  /* MOBILE: tab bar scrolls horizontally, buttons tighten */
+  @media (max-width: 640px) {
+    .tab-bar {
+      justify-content: flex-start;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tab-bar::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      padding: 14px 18px;
+      font-size: 9px;
+      letter-spacing: .12em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+  }
+
   /* PANELS */
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
@@ -155,6 +173,133 @@
   .lc-scores { font-family: var(--body); font-size: 9px; color: var(--muted); line-height: 1.55; }
   .vendor-group { cursor: pointer; }
   .vendor-group polygon, .vendor-group circle { transition: opacity .22s, stroke-width .22s; }
+
+/* ═══════════════════════════════════════════
+   TAB 3 — THE OTHER IDENTITY PLAYERS
+   All rules scoped under .deepdive
+═══════════════════════════════════════════ */
+.deepdive { --dd-tu:#3a8fd4; --dd-exp:#c5281c; --dd-id5:#2db872; --dd-pub:#a066e8; }
+.deepdive {
+  font-family:var(--body); color:var(--text); background:var(--bg);
+  font-size:15px; line-height:1.7; -webkit-font-smoothing:antialiased; padding-bottom:80px;
+}
+.deepdive .masthead {
+  border-bottom:2px solid var(--text); padding:56px 48px 40px;
+  max-width:1200px; margin:0 auto;
+}
+.deepdive .masthead-kicker {
+  font-family:var(--display); font-size:11px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:20px; font-weight:600;
+}
+.deepdive .masthead h1 {
+  font-family:var(--display); font-size:clamp(32px,5vw,56px); font-weight:700;
+  line-height:1.08; letter-spacing:-.02em; max-width:820px; margin-bottom:20px; color:var(--text);
+}
+.deepdive .masthead-sub {
+  font-size:17px; max-width:640px; color:var(--muted); line-height:1.65; margin-bottom:32px;
+}
+.deepdive .stat-row { display:flex; gap:48px; flex-wrap:wrap; padding-top:24px; border-top:1px solid var(--rule); }
+.deepdive .stat-num { font-family:var(--display); font-size:32px; font-weight:700; letter-spacing:-.02em; display:block; color:var(--brand); }
+.deepdive .stat-label { font-family:var(--display); font-size:10px; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); font-weight:600; }
+.deepdive .content { max-width:1200px; margin:0 auto; padding:0 48px 80px; }
+.deepdive .section { padding:64px 0 0; border-top:1px solid var(--rule); margin-top:64px; }
+.deepdive .section:first-child { margin-top:48px; border-top:none; padding-top:48px; }
+.deepdive .section-header { display:flex; align-items:baseline; gap:20px; margin-bottom:36px; }
+.deepdive .section-num { font-family:var(--display); font-size:11px; letter-spacing:.1em; color:var(--brand); padding-top:4px; flex-shrink:0; font-weight:700; }
+.deepdive .section-title { font-family:var(--display); font-size:clamp(20px,3vw,28px); font-weight:700; line-height:1.15; letter-spacing:-.01em; color:var(--text); }
+.deepdive .section-intro { max-width:760px; margin-bottom:32px; color:var(--muted); font-size:15px; line-height:1.7; }
+.deepdive .table-wrap { overflow-x:auto; margin:0 -4px; -webkit-overflow-scrolling:touch; }
+.deepdive table { width:100%; border-collapse:collapse; font-size:13.5px; }
+.deepdive th { font-family:var(--display); font-size:9.5px; text-transform:uppercase; letter-spacing:.1em; padding:10px 16px; text-align:left; border-bottom:2px solid var(--text); background:var(--bg); position:sticky; top:0; white-space:nowrap; font-weight:700; color:var(--text); }
+.deepdive th.col-tu { color:var(--dd-tu); }
+.deepdive th.col-exp { color:var(--dd-exp); }
+.deepdive th.col-id5 { color:var(--dd-id5); }
+.deepdive td { padding:13px 16px; vertical-align:top; border-bottom:1px solid var(--rule); line-height:1.55; color:var(--text); background:transparent; }
+.deepdive tr:last-child td { border-bottom:none; }
+.deepdive td:first-child { font-family:var(--display); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); white-space:nowrap; padding-right:24px; width:170px; font-weight:600; }
+.deepdive td.col-tu { border-left:3px solid var(--dd-tu); }
+.deepdive td.col-exp { border-left:3px solid var(--dd-exp); }
+.deepdive td.col-id5 { border-left:3px solid var(--dd-id5); }
+.deepdive .chip { display:inline-block; font-family:var(--display); font-size:9px; text-transform:uppercase; letter-spacing:.1em; padding:2px 7px; border-radius:2px; margin-top:5px; font-weight:600; }
+.deepdive .chip-tu { background:#dce8f2; color:var(--dd-tu); }
+.deepdive .chip-exp { background:#fce8e7; color:var(--dd-exp); }
+.deepdive .chip-id5 { background:#d9f0e5; color:var(--dd-id5); }
+.deepdive .chip-pub { background:#ece0f7; color:var(--dd-pub); }
+.deepdive .chip-risk { background:#fff3cc; color:#7a5c00; }
+.deepdive .chip-warn { background:#ffe0dc; color:#8b1a00; }
+.deepdive .chip-ok { background:#d9f0e5; color:#0f5c2e; }
+.deepdive .player-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2px; margin-top:4px; }
+.deepdive .player-card { padding:28px; background:var(--surface); border-top:4px solid var(--rule); }
+.deepdive .player-card.tu { border-color:var(--dd-tu); }
+.deepdive .player-card.exp { border-color:var(--dd-exp); }
+.deepdive .player-card.id5 { border-color:var(--dd-id5); }
+.deepdive .player-card-name { font-family:var(--display); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.12em; margin-bottom:12px; }
+.deepdive .tu .player-card-name { color:var(--dd-tu); }
+.deepdive .exp .player-card-name { color:var(--dd-exp); }
+.deepdive .id5 .player-card-name { color:var(--dd-id5); }
+.deepdive .player-card-headline { font-family:var(--display); font-size:18px; font-weight:700; line-height:1.2; margin-bottom:14px; letter-spacing:-.01em; color:var(--text); }
+.deepdive .player-card p { font-size:13.5px; color:var(--muted); line-height:1.6; }
+.deepdive .player-meta { margin-top:18px; padding-top:14px; border-top:1px solid var(--rule); display:flex; flex-direction:column; gap:6px; }
+.deepdive .player-meta-key { font-family:var(--display); font-size:9px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); font-weight:600; }
+.deepdive .player-meta-val { font-size:13px; font-weight:600; color:var(--text); }
+.deepdive .scenario-grid { display:grid; grid-template-columns:1fr; gap:2px; margin-top:4px; }
+.deepdive .scenario-card { display:grid; grid-template-columns:260px 1fr 1fr 1fr; background:var(--surface); border-left:4px solid var(--rule); }
+.deepdive .scenario-card:nth-child(even) { background:var(--bg); }
+.deepdive .scenario-label { padding:24px; border-right:1px solid var(--rule); }
+.deepdive .scenario-label-title { font-family:var(--display); font-size:15px; font-weight:700; line-height:1.25; margin-bottom:8px; color:var(--text); }
+.deepdive .scenario-label-desc { font-size:12px; color:var(--muted); line-height:1.55; }
+.deepdive .scenario-cell { padding:20px; border-right:1px solid var(--rule); font-size:13px; line-height:1.55; color:var(--text); }
+.deepdive .scenario-cell:last-child { border-right:none; }
+.deepdive .scenario-cell p { color:var(--muted); }
+.deepdive .scenario-cell-vendor { font-family:var(--display); font-size:9px; text-transform:uppercase; letter-spacing:.1em; margin-bottom:8px; font-weight:700; }
+.deepdive .cell-tu .scenario-cell-vendor { color:var(--dd-tu); }
+.deepdive .cell-exp .scenario-cell-vendor { color:var(--dd-exp); }
+.deepdive .cell-pub .scenario-cell-vendor { color:var(--dd-pub); }
+.deepdive .win-badge { display:inline-block; font-family:var(--display); font-size:8px; text-transform:uppercase; letter-spacing:.1em; padding:2px 6px; margin-bottom:6px; border-radius:1px; font-weight:700; }
+.deepdive .win { background:var(--brand); color:#fff; }
+.deepdive .draw { background:var(--surface2); color:var(--muted); }
+.deepdive .adv { background:var(--brand-light); color:var(--brand-dark); }
+.deepdive .warn { background:#ffe0dc; color:#8b1a00; }
+.deepdive .scenario-header { display:grid; grid-template-columns:260px 1fr 1fr 1fr; border-bottom:2px solid var(--text); background:var(--surface); }
+.deepdive .scenario-header-cell { padding:10px 20px; font-family:var(--display); font-size:9.5px; text-transform:uppercase; letter-spacing:.1em; border-right:1px solid var(--rule); font-weight:700; color:var(--text); }
+.deepdive .scenario-header-cell:last-child { border-right:none; }
+.deepdive .sh-tu { color:var(--dd-tu); }
+.deepdive .sh-exp { color:var(--dd-exp); }
+.deepdive .sh-id5 { color:var(--dd-id5); }
+.deepdive .sh-pub { color:var(--dd-pub); }
+.deepdive .callout { background:var(--brand-dark); color:#fff; padding:36px 40px; margin:48px 0 0; border-left:4px solid var(--brand); }
+.deepdive .callout-source { font-family:var(--display); font-size:9px; text-transform:uppercase; letter-spacing:.1em; color:var(--brand-light); margin-bottom:16px; font-weight:700; }
+.deepdive .callout-text { font-family:var(--display); font-size:clamp(16px,2.2vw,22px); font-weight:600; line-height:1.4; letter-spacing:-.01em; color:#fff; }
+.deepdive .footnote { border-top:1px solid var(--rule); margin-top:64px; padding-top:24px; font-size:12px; color:var(--muted); line-height:1.7; }
+.deepdive .footnote sup { font-size:9px; }
+.deepdive .sources { margin-top:40px; padding-top:24px; border-top:1px solid var(--rule); font-size:11px; color:var(--muted); line-height:1.8; }
+@media (max-width:860px) {
+  .deepdive .masthead,.deepdive .content { padding-left:24px; padding-right:24px; }
+  .deepdive .scenario-card,.deepdive .scenario-header { grid-template-columns:1fr; }
+  .deepdive .scenario-label { border-right:none; border-bottom:1px solid var(--rule); }
+  .deepdive .scenario-cell { border-right:none; border-bottom:1px solid var(--rule); }
+  .deepdive .scenario-header-cell { border-right:none; }
+  .deepdive .stat-row { gap:28px; }
+  .deepdive .player-grid { grid-template-columns:1fr; }
+}
+@media (max-width:600px) {
+  .deepdive .masthead { padding:32px 18px 28px; }
+  .deepdive .content { padding:0 18px 56px; }
+  .deepdive .section { padding-top:44px; margin-top:44px; }
+  .deepdive .section:first-child { padding-top:36px; margin-top:0; }
+  .deepdive .section-header { flex-direction:column; gap:4px; }
+  .deepdive .player-grid { gap:12px; }
+  .deepdive .player-card { padding:22px 18px; }
+  .deepdive .masthead-sub { font-size:15px; }
+  .deepdive .callout { padding:24px 20px; }
+  .deepdive .scenario-header { display:none; }
+  .deepdive .scenario-card { display:block; margin-bottom:16px; border:1px solid var(--rule); border-left:4px solid var(--rule); }
+  .deepdive .scenario-label { padding:18px 16px; border-right:none; border-bottom:1px solid var(--rule); }
+  .deepdive .scenario-cell { padding:16px; border-right:none; border-bottom:1px solid var(--rule); }
+  .deepdive .scenario-cell:last-child { border-bottom:none; }
+  .deepdive .footnote, .deepdive .sources { font-size:11px; }
+}
+
 </style>
 </head>
 <body>
@@ -162,6 +307,7 @@
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab('grid',this)">Grid View</button>
   <button class="tab-btn" onclick="switchTab('radar',this)">Radar View</button>
+  <button class="tab-btn" onclick="switchTab('deepdive',this)">The Other Players</button>
 </div>
 
 <!-- GRID PANEL -->
@@ -221,8 +367,8 @@
     <div class="grid-cell partial"><div class="tier-badge">Partial</div><div class="cell-note">30+ countries. US-dominant in marketing identity. International bureau ops serve credit, not marketing.</div></div>
     <div class="grid-cell strong"><div class="tier-badge">Strong</div><div class="cell-note">WorldView covers 130+ countries with consistent consumer data. Strongest international coverage of all six.</div></div>
     <div class="grid-cell strong"><div class="tier-badge">Strong</div><div class="cell-note">EU-native GDPR design. 1.5B users / 665M HH post-TrueData. Strong EMEA and APAC footprint.</div></div>
-    <div class="grid-cell partial"><div class="tier-badge">Partial</div><div class="cell-note">Global reach via partnerships. 94% of revenue is US-based. International depth is limited.</div></div>
-    <div class="grid-cell limited"><div class="tier-badge">Limited</div><div class="cell-note">97% US revenue. Epsilon's data and modeling heritage is almost entirely domestic.</div></div>
+    <div class="grid-cell partial"><div class="tier-badge">Partial</div><div class="cell-note">Global reach via partnerships. approximately 90% of revenue is US-based. International depth is limited.</div></div>
+    <div class="grid-cell limited"><div class="tier-badge">Limited</div><div class="cell-note">Predominantly US revenue. Epsilon's data and modeling heritage is almost entirely domestic.</div></div>
     <div class="grid-cell strong"><div class="tier-badge">Strong</div><div class="cell-note">Panorama ID spans 109 countries. The strongest international alternative ID of the Publicis stack.</div></div>
   </div>
 
@@ -251,8 +397,9 @@
       <strong>Methodology.</strong> Vendors evaluated across five dimensions: Data Marketplace (segment breadth, partner ecosystem), Clean Room Technology (native infrastructure vs. third-party reliance), Geographic Coverage (global reach and non-US depth), Identity Coverage (graph scale, determinism, persistence), and Services Capabilities (measurement, analytics, managed services). Ratings are independent analytical judgment. No vendor reviewed or approved them.<br><br>
       <strong>Sources.</strong> TransUnion/TruAudience: product documentation, 2024 press releases, Neustar acquisition filings. Experian: Marketing Services product pages, public disclosures. ID5: product documentation, IAB Tech Lab submissions. LiveRamp: product docs, Safe Haven and Habu acquisition materials (2024). Epsilon: PeopleCloud documentation, IDC MarketScape 2025. Lotame: product documentation, Panorama ID technical specs.<br><br>
       <em>As of May 2026. Not investment advice. Disclosure: author worked at Neustar/TransUnion 2017&ndash;2021.</em>
+      <strong>Note:</strong> Publicis announced a $2.5B acquisition of LiveRamp in May 2026, pending close.
     </div>
-    <div class="footer-logo">CHRISHAWK</div>
+    <div class="footer-logo">CHRIS HAWK</div>
   </div>
 
 </div></div>
@@ -322,8 +469,9 @@
       <strong>Scoring methodology.</strong> Each dimension scored 0 to 2. Strong (2): native capability, scale leadership, or clear differentiation. Partial (1): meaningful capability with gaps or third-party reliance. Limited (0): minimal native capability, infrastructure-only positioning. All five dimensions weighted equally. Polygon area reflects spread across axes, not a composite score.<br><br>
       <strong>Sources.</strong> Same as Grid View. Ratings corroborated against vendor press releases, product documentation, and analyst coverage as of May 2026.<br><br>
       <em>Not investment advice. Disclosure: author worked at Neustar/TransUnion 2017&ndash;2021.</em>
+      <strong>Note:</strong> Publicis announced a $2.5B acquisition of LiveRamp in May 2026, pending close.
     </div>
-    <div class="footer-logo">CHRISHAWK</div>
+    <div class="footer-logo">CHRIS HAWK</div>
   </div>
 
 </div></div>
@@ -431,5 +579,484 @@ function resetFocus(){
   document.querySelectorAll(".legend-card").forEach(c=>c.classList.remove("active","dimmed"));
 }
 </script>
+
+
+  <!-- TAB 3: THE OTHER IDENTITY PLAYERS -->
+  <div id="panel-deepdive" class="tab-panel">
+    <div class="deepdive">
+      <div class="masthead">
+  <div class="masthead-kicker">Research Analysis · May 2026</div>
+  <h1>The Other Identity Players</h1>
+  <p class="masthead-sub">The Publicis stack dominates the conversation. It shouldn't dominate the decision. This is a breakdown of TransUnion, Experian, and ID5: what they do, how they compare to each other, and how they match up against Publicis. Prominent players. Not an exhaustive list.</p>
+  <p class="masthead-kicker" style="margin-top: 16px;">All facts and figures sourced from public filings, product documentation, and press releases as cited at the bottom of the page.</p>
+</div>
+
+<div class="content">
+
+  <!-- 01 PROFILES -->
+  <section class="section" id="profiles">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">General Profile Comparison</h2>
+    </div>
+    <p class="section-intro">Three companies with different origins, different regulatory footprints, and fundamentally different reasons for being in the identity business. Understanding where they came from explains why their products look the way they do.</p>
+
+    <div class="player-grid">
+      <div class="player-card tu">
+        <div class="player-card-name">TransUnion / TruAudience</div>
+        <div class="player-card-headline">The credit bureau that built a marketing stack on top of fraud infrastructure</div>
+        <p>TransUnion entered marketing identity through two acquisitions: Tru Optik (CTV identity, 2020) and Neustar (identity resolution, $3.1B, 2021). The combined business operates as the TruAudience ID Graph, drawing on 200+ data sources including credit, fraud, and phone signals to cover 125M+ US households and 98% of US adults. The marketing unit sits inside TransUnion's Financial Services and Emerging Verticals segments and is primarily US-focused, though TransUnion operates in 30+ countries. The identity graph it produces runs deeper than anything a competitor without bureau heritage can match.</p>
+      </div>
+
+      <div class="player-card exp">
+        <div class="player-card-name">Experian Marketing Services</div>
+        <div class="player-card-headline">The global bureau with the largest digital ID count and a newly launched data marketplace</div>
+        <p>Experian Marketing Services is the marketing division of Experian plc (LSE: EXPN), a $7.5B revenue global information company. Its identity product, the Digital Graph, launched formally in 2024 and expanded in 2025, connects offline consumer data across 126M US households and 250M individuals to 4B+ active digital IDs, among the largest publicly disclosed digital identity graphs in the market. Experian's geographic reach is the broadest of the three, covering 130+ countries via its WorldView product. A full data marketplace launched in early 2025, putting Experian in direct competition with LiveRamp's marketplace model for the first time.</p>
+      </div>
+
+      <div class="player-card id5">
+        <div class="player-card-name">ID5</div>
+        <div class="player-card-headline">The independent universal ID built for the open web, now expanding into the US after acquiring TrueData</div>
+        <p>ID5 was founded in 2017 in London with a specific thesis: the open web needed a privacy-compliant, cookieless universal identifier that no single holding company or publisher controlled. Its identity product, the ID5 ID (operating under the Adaptive Identity framework), is built from hashed email, page URL, IP, and machine learning, and operates across 21,600+ companies globally. EU-native by design with strong GDPR compliance, ID5 has grown its international footprint across EMEA and APAC before turning its attention to the US. In November 2025, ID5 acquired TrueData, a US-based identity graph company, to deepen that domestic presence. The company raised a $20M Series B with TransUnion among its investors. Notable: TransUnion is also a direct competitor. ID5 remains independent. That's increasingly the differentiator.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 IDENTITY METHOD -->
+  <section class="section" id="identity">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Identity Resolution Method</h2>
+    </div>
+    <p class="section-intro">Each company resolves identity differently. TransUnion anchors on regulated credit and phone data. Experian anchors on offline consumer records and extends digitally. ID5 has no offline anchor at all, which is both its constraint and its design choice for privacy-first environments.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th class="col-tu">TransUnion / TruAudience</th>
+            <th class="col-exp">Experian</th>
+            <th class="col-id5">ID5</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Anchor Signal</td>
+            <td class="col-tu">Credit bureau data, phone signals (16B+ monthly), and offline consumer records. The Neustar OneID graph, now the TruAudience identity graph, is built on regulated financial and telecom data unavailable to pure-play adtech vendors.</td>
+            <td class="col-exp">Offline consumer records: 126M US households from credit, public records, and survey data, extended digitally via the Digital Graph using AI and machine learning to link MAIDs, CTV IDs, and hashed emails.</td>
+            <td class="col-id5">No offline PII anchor. Inputs include hashed email, page URL, IP addresses, timestamps, and device signals, processed through a machine learning model to generate a persistent, encrypted identifier.</td>
+          </tr>
+          <tr>
+            <td>Resolution Type</td>
+            <td class="col-tu">Deterministic spine with AI-assisted extension. Scored at the individual and household level for quality; 99.5% identity persistence rate (per TransUnion) and 98% US adult population coverage (per TransUnion). <br><br><span class="chip chip-tu">Deterministic Core</span></td>
+            <td class="col-exp">Deterministic at the offline record level; AI/ML extends to digital IDs. The Digital Graph resolves 84% of IDs in documented DSP case studies. Supports household and individual-level resolution. <br><br><span class="chip chip-exp">Deterministic + ML Extension</span></td>
+            <td class="col-id5">Probabilistic by design. No authenticated user requirement. Explicitly built to address environments where deterministic login-based IDs fail, including Safari, Firefox, and cookieless Chrome. <br><br><span class="chip chip-id5">Probabilistic / Cookieless Native</span></td>
+          </tr>
+          <tr>
+            <td>Operating Environment</td>
+            <td class="col-tu">CRM enrichment, audience targeting, CTV and cross-channel measurement, fraud detection adjacent to marketing workflows. Particularly well-suited to closed-loop environments with first-party data.</td>
+            <td class="col-exp">CTV, mobile, display, programmatic, social. The Digital Graph connects TV operators, SSPs, DSPs, and brands. 200+ activation destinations including Meta, Pinterest, and DV360.</td>
+            <td class="col-id5">Open web, mobile, CTV, gaming, audio/podcast. Anywhere third-party cookies and MAIDs are unavailable or unreliable. Particularly well-suited to publisher-side environments.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 03 WHO THEY SERVE -->
+  <section class="section" id="buyers">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Who Each One Was Built For</h2>
+    </div>
+    <p class="section-intro">Bureau identity companies grew up serving financial services, telco, and insurance clients. Their marketing products are an extension of that heritage, not the origin of it. ID5 was built specifically for the advertising ecosystem from day one. That difference in founding context shapes everything about how each company sells and supports its products.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th class="col-tu">TransUnion</th>
+            <th class="col-exp">Experian</th>
+            <th class="col-id5">ID5</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Primary Buyer</td>
+            <td class="col-tu">Financial services marketers, telecom, insurance, and healthcare brands with regulated data needs. CTV and streaming platforms via the Tru Optik heritage.</td>
+            <td class="col-exp">Brand advertisers across 15 verticals (retail, finance, travel, healthcare, telecom). DSPs and SSPs activating audiences. Also strong with agencies running programmatic and CTV campaigns.</td>
+            <td class="col-id5">Publishers seeking to monetize cookieless inventory. DSPs and SSPs needing match rates in non-cookie environments. Advertisers running campaigns on open web, mobile, and gaming.</td>
+          </tr>
+          <tr>
+            <td>Primary Use Case</td>
+            <td class="col-tu">Identity enrichment for CRM and first-party data. Audience targeting with financial behavior signals. CTV identity and cross-device measurement. Closed-loop attribution.</td>
+            <td class="col-exp">Cross-channel audience activation. Third-party data enrichment via data marketplace. Programmatic campaign targeting. CTV and social audience extension. Identity-based measurement.</td>
+            <td class="col-id5">Publisher audience addressability in cookieless environments. Match rate improvement for DSP/SSP integrations. Open web frequency management and attribution. CTV addressability in FAST and AVOD.</td>
+          </tr>
+          <tr>
+            <td>Role in Ecosystem</td>
+            <td class="col-tu">Buy-side data layer with a financial services heritage. Positioned as a complement to first-party data strategy rather than a replacement. Neutral: no media business or agency relationships to create conflict.</td>
+            <td class="col-exp">Data enrichment and activation layer for brands and platforms. Neutral infrastructure: Experian does not buy media on behalf of clients and has no agency affiliate that creates spend conflict.</td>
+            <td class="col-id5">Open-web identity infrastructure layer. Explicitly neutral by design: no DSP, no SSP, no agency, no holding company affiliation. Serves both buy-side and sell-side without structural conflict.</td>
+          </tr>
+          <tr>
+            <td>Competitive Tension</td>
+            <td class="col-tu">Competes with Experian for data enrichment mandates. Competes with LiveRamp for onboarding and identity transport. The Neustar acquisition made TransUnion a more direct competitor to both.</td>
+            <td class="col-exp">Competes with TransUnion for data enrichment, and increasingly with LiveRamp's marketplace model following the 2025 Experian marketplace launch. Both bureaus compete with each other on data quality claims.</td>
+            <td class="col-id5">Competes with RampID, UID2, and other alternative IDs for publisher adoption. The TrueData acquisition brings ID5 into more direct competition with bureau identity vendors for US advertiser mandates.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="callout-source">Key Distinction</div>
+      <div class="callout-text">TransUnion and Experian are financial data companies that also sell marketing identity. ID5 is a marketing identity company and nothing else. That difference shapes product investment, regulatory approach, and how quickly each can move in response to market changes.</div>
+    </div>
+  </section>
+
+  <!-- 04 HEAD-TO-HEAD CONTRAST -->
+  <section class="section" id="contrast">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">TransUnion vs. Experian vs. ID5: Direct Contrast</h2>
+    </div>
+    <p class="section-intro">Three companies operating in the same identity space, serving overlapping but distinct buyers. The table below is a direct contrast across the dimensions that matter most for buying decisions.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th class="col-tu">TransUnion</th>
+            <th class="col-exp">Experian</th>
+            <th class="col-id5">ID5</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Identity Spine</td>
+            <td class="col-tu">Credit bureau + telecom data. Regulated, hard to replicate.</td>
+            <td class="col-exp">Offline consumer records + 4B digital IDs. Broadest digital extension.</td>
+            <td class="col-id5">No offline spine. Probabilistic, cookieless-native.</td>
+          </tr>
+          <tr>
+            <td>US Scale (HH)</td>
+            <td class="col-tu">125M+ households</td>
+            <td class="col-exp">126M households / 250M individuals</td>
+            <td class="col-id5">Not HH-based. Publisher and device-level scale.</td>
+          </tr>
+          <tr>
+            <td>Global Reach</td>
+            <td class="col-tu">30+ countries. US-dominant in marketing use cases.</td>
+            <td class="col-exp">130+ countries via WorldView. Most global of the three bureaus.</td>
+            <td class="col-id5">Founded in EU. Strong in EMEA and APAC. Growing US presence post-TrueData.</td>
+          </tr>
+          <tr>
+            <td>Best Data Signal</td>
+            <td class="col-tu">Financial behavior. Credit, debt, and telecom signals.</td>
+            <td class="col-exp">Psychographic and lifestyle depth. MOSAIC + ConsumerView.</td>
+            <td class="col-id5">No proprietary data signal. ID enablement only.</td>
+          </tr>
+          <tr>
+            <td>Clean Room</td>
+            <td class="col-tu">TruAudience includes a named clean room product built on the OneTru identity graph, supporting identity resolution, enrichment, and analytics in a privacy-safe environment. Not a flagship clean room platform at the scale of LiveRamp's offering, but a real product.<br><br><span class="chip chip-tu">Product Exists</span></td>
+            <td class="col-exp">Supports clean room use cases via identity graph integration with partner platforms. Experian takes an agnostic approach, positioning its data and matching capabilities inside clients' preferred clean room environments rather than operating a proprietary platform.<br><br><span class="chip chip-exp">Agnostic Integrator</span></td>
+            <td class="col-id5">No clean room. Identity infrastructure only.</td>
+          </tr>
+          <tr>
+            <td>Measurement</td>
+            <td class="col-tu">Closed-loop attribution via TruAudience. Credit-informed conversion measurement unique to bureau operators.</td>
+            <td class="col-exp">Cross-channel attribution. Identity-based measurement across CTV, mobile, and display.</td>
+            <td class="col-id5">Enables measurement in cookieless environments via ID5 ID persistence. Not a measurement platform itself.</td>
+          </tr>
+          <tr>
+            <td>Services Model</td>
+            <td class="col-tu">Platform + managed services. Consultative sales. Not a self-serve-first product.</td>
+            <td class="col-exp">Platform + managed services. Pre-built segments available for self-serve activation in major platforms.</td>
+            <td class="col-id5">Technical integration model. Publisher and platform partnerships are the sales channel. Not a managed services business.</td>
+          </tr>
+          <tr>
+            <td>Pricing Model</td>
+            <td class="col-tu">Enterprise contract. Data licensing and usage-based fees.</td>
+            <td class="col-exp">Data licensing, CPM-based activation, and marketplace revenue share with data partners.</td>
+            <td class="col-id5">SaaS and usage-based. Revenue also comes from The Trade Desk Identity Alliance participation.</td>
+          </tr>
+          <tr>
+            <td>Who Should Use It</td>
+            <td class="col-tu">Financial services, auto, insurance, and telecom brands with regulated data needs. CTV-heavy advertisers. Brands prioritizing credit-signal audience precision over broad reach.</td>
+            <td class="col-exp">Brands wanting the broadest data library and the most activation destinations in one platform. Agencies running cross-channel campaigns across CTV, social, and programmatic simultaneously.</td>
+            <td class="col-id5">Publishers monetizing cookieless inventory. DSPs and SSPs improving match rates in non-cookie environments. Any buyer running campaigns in Safari, Firefox, or post-cookie Chrome.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 05 MEASUREMENT -->
+  <section class="section" id="measurement">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Measurement Capabilities</h2>
+    </div>
+    <p class="section-intro">Identity and measurement are increasingly the same product. TransUnion's measurement capabilities come directly from the Neustar acquisition, which brought one of the industry's most established MMM and MTA practices into the TruAudience portfolio. Experian's measurement role is primarily as an identity infrastructure provider powering third-party measurement platforms, most notably VideoAmp. ID5 is not a measurement platform, but its ID enables campaign-level attribution and frequency deduplication where other identifiers fail. That's a real contribution, if a narrow one.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th class="col-tu">TransUnion / TruAudience</th>
+            <th class="col-exp">Experian</th>
+            <th class="col-id5">ID5</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Measurement Role</td>
+            <td class="col-tu">Active measurement platform. TruAudience Analytics (formerly Neustar MTA) and TruAudience Marketing Mix Modeling are standalone products sold directly to brands and agencies. TransUnion is the vendor of record for measurement, not just an input.<br><br><span class="chip chip-tu">Native Measurement Platform</span></td>
+            <td class="col-exp">Identity infrastructure layer that powers third-party measurement platforms. Experian's graph and audience data feed into measurement vendors including VideoAmp, which uses Experian to map devices to households for TV currency measurement. Experian itself does not sell an MMM or MTA product.<br><br><span class="chip chip-exp">Measurement Enablement Layer</span></td>
+            <td class="col-id5">Attribution enablement in cookieless environments. The ID5 ID can track and match impressions, clicks, and conversions where cookies and MAIDs are unavailable. Not a measurement platform, modeling product, or analytics tool.<br><br><span class="chip chip-id5">Cookieless Attribution Enablement</span></td>
+          </tr>
+          <tr>
+            <td>MMM Capability</td>
+            <td class="col-tu">Full MMM product. Built on the Neustar modeling heritage, which uses log-log multi-regression, Bayesian, and diffusion models tailored to the specific measurement challenge. The TruAudience approach rejects MMM vs. MTA dogma: models are selected based on the business question, not a fixed methodology. Clients include Bayer, which worked with TransUnion and Nielsen to consolidate a fragmented measurement stack into a single source of truth.</td>
+            <td class="col-exp">No native MMM product. Experian's contribution to MMM is as a data enrichment and identity matching layer when measurement vendors need to connect offline consumer attributes to media exposure data. Not a modeling or analytics platform.</td>
+            <td class="col-id5">None. ID5 does not conduct or sell marketing mix modeling.</td>
+          </tr>
+          <tr>
+            <td>MTA Capability</td>
+            <td class="col-tu">Full MTA product. TruAudience Marketing Attribution assigns fractional credit across all touchpoints in a customer journey, answering which channels and tactics drove conversions and at what marginal contribution. TikTok is an active MTA partner, surfacing TikTok impression-to-conversion insights inside the TruAudience Analytics dashboard for US advertisers.</td>
+            <td class="col-exp">No native MTA product. Experian's identity graph enables MTA for clients through its household-level device resolution: partners like AdRoll use Experian to ladder all household devices to a single household ID, enabling cross-device attribution without relying on PII in the matching layer.</td>
+            <td class="col-id5">Limited but real. The ID5 ID enables impression and conversion tracking at the event level for campaigns running in cookieless environments. This is event-level matching, not a full MTA methodology, but it fills an attribution gap where other solutions produce zero signal.</td>
+          </tr>
+          <tr>
+            <td>Incrementality Testing</td>
+            <td class="col-tu">Supported as part of the unified measurement strategy. TransUnion's October 2025 research (fielded with eMarketer, n=196 US marketing professionals) found 67% of marketers now prioritize incremental ROI measurement above other measurement goals. The TruAudience platform explicitly positions incrementality testing alongside MMM and MTA as a unified measurement framework.</td>
+            <td class="col-exp">Supported through partner integrations rather than as a native product. Experian's identity layer enables clean control/exposed splits for incrementality tests when the identity resolution underlying the test is Experian-powered.</td>
+            <td class="col-id5">No incrementality testing product. The ID5 ID can be used to define exposed vs. control groups at the identifier level in cookieless environments, but this is infrastructure, not methodology.</td>
+          </tr>
+          <tr>
+            <td>TV Measurement</td>
+            <td class="col-tu">Cross-platform TV measurement via VideoAmp integration. TransUnion joined VideoAmp's Commingled ID Graph in late 2024, alongside Experian, Verisk, and LiveIntent. The combined integration enables cross-platform linear and digital measurement with identity resolution powered by TransUnion's graph. VideoAmp achieved $3B in media transacted on its currency in 2024 and received JIC certification for Personified Demos.</td>
+            <td class="col-exp">One of the original and most established identity partners in VideoAmp's ecosystem. VideoAmp uses Experian to map set-top box, smart TV, and streaming data to households, enabling its currency measurement across TV publishers including NBCU, Paramount Vantage, and Warner Bros. Discovery. Experian also powers household identity for CTV measurement across Comcast FreeWheel and other TV ecosystem partners. Double-digit year-over-year growth in Experian's TV measurement business was reported through 2024.</td>
+            <td class="col-id5">CTV addressability focus, not TV currency measurement. ID5's CTV expansion (Rakuten TV, Triton Digital partnerships in 2025-2026) is focused on enabling addressable targeting and frequency management in streaming environments, not contributing to linear TV currency or cross-platform ratings measurement.</td>
+          </tr>
+          <tr>
+            <td>Closed-Loop Attribution</td>
+            <td class="col-tu">A core TruAudience feature. Credit-informed closed-loop attribution connects media exposure to actual purchase or financial behavior outcomes using TransUnion's bureau-grade data as the conversion signal. For financial services, auto, and insurance clients, this means closing the loop on outcomes that pure-play adtech vendors cannot observe without bureau-grade data access.</td>
+            <td class="col-exp">Supported through identity-anchored attribution frameworks. Experian's identity spine links media exposure to consumer outcomes across channels. The digital graph's 84% ID resolution rate in documented DSP case studies directly feeds attribution accuracy. Not a bureau-closed-loop solution of the same type as TransUnion's credit-informed attribution.</td>
+            <td class="col-id5">Enabled in cookieless environments specifically. The ID5 ID connects impressions to conversions across sessions and devices where no cookie or MAID persists. This is particularly valuable in CTV-to-mobile attribution paths where other identifiers produce no conversion signal at all.</td>
+          </tr>
+          <tr>
+            <td>Key Clients / Partnerships</td>
+            <td class="col-tu">Bayer (unified MMM/MTA deployment with Nielsen). TikTok (MTA integration). VideoAmp (TV measurement). BERA (brand equity integrated into MMM/MTA models via Neustar Optimizer).</td>
+            <td class="col-exp">VideoAmp (original Commingled ID Graph partner; household identity backbone for TV currency). Comcast FreeWheel (addressability initiative). MiQ (identity spine for attribution). AdRoll (household attribution). Infillion (CTV identity). TelevisaUnivision (data and analytics).</td>
+            <td class="col-id5">Adobe (measurement and paid media). Adform (ID Fusion for campaign performance and measurement). Rakuten TV (CTV addressability and measurement). Triton Digital (publisher addressability and revenue optimization).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="callout-source">Two Different Philosophies</div>
+      <div class="callout-text">TransUnion's measurement model is consultative: the data, the modeling, and the client relationship are bundled together, with TransUnion holding the measurement contract directly. Experian's model is infrastructure. It powers other companies' measurement products (VideoAmp, MiQ, AdRoll) without owning the reporting or the client relationship. One model gives you a single vendor accountable for outcomes. The other gives you flexibility to choose your measurement platform while still benefiting from Experian's identity spine underneath it.</div>
+    </div>
+  </section>
+
+  <!-- 06 SCENARIOS vs. PUBLICIS -->
+  <section class="section" id="scenarios">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2 class="section-title">Scenario-Based Comparison vs. the Publicis Stack</h2>
+    </div>
+    <p class="section-intro">TransUnion, Experian, and ID5 all win some scenarios against the Publicis stack. None of the players win all of the scenarios. This maps which player is best positioned for which task.</p>
+
+    <div class="scenario-header">
+      <div class="scenario-header-cell">Scenario</div>
+      <div class="scenario-header-cell sh-tu">TransUnion</div>
+      <div class="scenario-header-cell sh-exp">Experian</div>
+      <div class="scenario-header-cell sh-pub">Publicis Stack</div>
+    </div>
+
+    <div class="scenario-grid">
+
+      <div class="scenario-card">
+        <div class="scenario-label">
+          <div class="scenario-label-title">Financial services brand targeting high-intent credit customers</div>
+          <div class="scenario-label-desc">Auto lender, credit card issuer, or insurance brand needing credit-behavior signals in audience targeting</div>
+        </div>
+        <div class="scenario-cell cell-tu">
+          <div class="scenario-cell-vendor">TransUnion</div>
+          <span class="win-badge win">Wins</span>
+          <p>The only player with FCRA-compliant credit-signal audiences. No other vendor in this comparison, including Publicis, can append real credit behavior to a marketing audience within regulatory guardrails.</p>
+        </div>
+        <div class="scenario-cell cell-exp">
+          <div class="scenario-cell-vendor">Experian</div>
+          <span class="win-badge adv">Competitive</span>
+          <p>Strong financial services data via ConsumerView and financial personality segments. Does not have bureau-grade credit signal depth but covers the category well through compliant proxy modeling.</p>
+        </div>
+        <div class="scenario-cell cell-pub">
+          <div class="scenario-cell-vendor">Publicis Stack</div>
+          <span class="win-badge draw">Limited</span>
+          <p>Epsilon's Abacus co-op data covers purchase and retail signals well but lacks bureau-grade financial behavior data. The Publicis stack is not built for regulated financial targeting at the credit-signal level.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-label">
+          <div class="scenario-label-title">Large brand running a cross-channel CRM activation campaign</div>
+          <div class="scenario-label-desc">Retail or CPG brand onboarding a first-party CRM file for activation across CTV, social, and programmatic</div>
+        </div>
+        <div class="scenario-cell cell-tu">
+          <div class="scenario-cell-vendor">TransUnion</div>
+          <span class="win-badge adv">Competitive</span>
+          <p>TruAudience handles CRM onboarding and identity enrichment well. Neustar's legacy onboarding infrastructure is solid. Activation coverage is broad but less pre-integrated than Experian at the destination level.</p>
+        </div>
+        <div class="scenario-cell cell-exp">
+          <div class="scenario-cell-vendor">Experian</div>
+          <span class="win-badge adv">Competitive</span>
+          <p>200+ activation destinations, pre-built on-shelf segments in Meta and DV360, and 4B+ digital IDs for maximum reach extension. The easiest platform for cross-channel activation out of the three independents.</p>
+        </div>
+        <div class="scenario-cell cell-pub">
+          <div class="scenario-cell-vendor">Publicis Stack</div>
+          <span class="win-badge win">Wins (for Publicis clients)</span>
+          <p>Epsilon's CORE ID anchored to verified PII, plus LiveRamp's 25,000+ publisher onboarding network (pending Publicis acquisition, announced May 2026), plus Lotame's open-web reach represents arguably the most vertically integrated CRM-to-activation stack available. For non-Publicis clients, the neutrality question is real.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-label">
+          <div class="scenario-label-title">Publisher monetizing cookieless inventory</div>
+          <div class="scenario-label-desc">Publisher needing match rates and addressability in Safari, Firefox, or post-cookie Chrome environments</div>
+        </div>
+        <div class="scenario-cell cell-tu">
+          <div class="scenario-cell-vendor">TransUnion</div>
+          <span class="win-badge draw">Partial</span>
+          <p>TruAudience has a publisher-side business (inherited from Tru Optik in CTV). General web publisher cookieless is not a primary use case. Better suited to CTV publisher environments than open-web display.</p>
+        </div>
+        <div class="scenario-cell cell-exp">
+          <div class="scenario-cell-vendor">Experian</div>
+          <span class="win-badge draw">Partial</span>
+          <p>Experian's Digital Graph powers publisher identity through partner integrations like Infillion and MiQ. Not a native publisher-side product; value is in the identity enrichment layer rather than direct publisher tooling.</p>
+        </div>
+        <div class="scenario-cell cell-pub">
+          <div class="scenario-cell-vendor">Publicis Stack</div>
+          <span class="win-badge draw">Complex</span>
+          <p>Lotame's 65,000+ publisher deployments and cookieless Panorama ID are the right tools here, but publishers who also compete with Publicis agencies for advertiser budgets will weigh the neutrality question before deepening dependence.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-label">
+          <div class="scenario-label-title">Competing agency or holding company running identity infrastructure</div>
+          <div class="scenario-label-desc">WPP, Omnicom, IPG, or Dentsu building an identity strategy that does not run through a competitor's infrastructure</div>
+        </div>
+        <div class="scenario-cell cell-tu">
+          <div class="scenario-cell-vendor">TransUnion</div>
+          <span class="win-badge win">Strong Option</span>
+          <p>Fully neutral. No agency affiliate, no media business, no holding company interest. TruAudience data and identity services are available to any buyer, including Publicis competitors, without structural conflict.</p>
+        </div>
+        <div class="scenario-cell cell-exp">
+          <div class="scenario-cell-vendor">Experian</div>
+          <span class="win-badge win">Strong Option</span>
+          <p>Fully neutral. Experian Marketing Services has no agency operations or media buying. For competing holding companies building an identity alternative to the Publicis stack, Experian is a credible infrastructure partner.</p>
+        </div>
+        <div class="scenario-cell cell-pub">
+          <div class="scenario-cell-vendor">Publicis Stack</div>
+          <span class="win-badge warn">Not applicable</span>
+          <p>Publicis announced a $2.5B acquisition of LiveRamp in May 2026. The deal hasn't closed. But competing holding companies already running LiveRamp for identity infrastructure are watching it move inside a direct competitor. Contractual protections exist. Strategic exposure is real.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-label">
+          <div class="scenario-label-title">Global brand needing identity infrastructure outside the US</div>
+          <div class="scenario-label-desc">Brand running campaigns across EMEA, LATAM, or APAC where US-built identity solutions typically degrade</div>
+        </div>
+        <div class="scenario-cell cell-tu">
+          <div class="scenario-cell-vendor">TransUnion</div>
+          <span class="win-badge draw">Limited</span>
+          <p>Operations in 30+ countries but the marketing identity product is US-centric. International bureau operations support credit and fraud use cases, not marketing identity at the same depth as domestic.</p>
+        </div>
+        <div class="scenario-cell cell-exp">
+          <div class="scenario-cell-vendor">Experian</div>
+          <span class="win-badge win">Wins</span>
+          <p>WorldView covers 130+ countries with consistent demographic and location data. Experian's global consumer data infrastructure is the broadest of any company in this analysis, including Publicis, outside the US.</p>
+        </div>
+        <div class="scenario-cell cell-pub">
+          <div class="scenario-cell-vendor">Publicis Stack</div>
+          <span class="win-badge adv">Competitive</span>
+          <p>Lotame's Panorama ID spans 109 countries and has been deployed across 65,000+ publishers globally, making it one of the more globally distributed cookieless identity products in the Publicis stack. But Epsilon is predominantly US revenue and LiveRamp is approximately 90% US revenue. Experian has the deeper international consumer data infrastructure.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-label">
+          <div class="scenario-label-title">Advertiser or DSP needing match rates in a cookieless environment without a bureau contract</div>
+          <div class="scenario-label-desc">Mid-market advertiser or DSP without existing bureau relationships needing cookieless addressability now</div>
+        </div>
+        <div class="scenario-cell cell-tu">
+          <div class="scenario-cell-vendor">TransUnion</div>
+          <span class="win-badge draw">Not the entry point</span>
+          <p>TruAudience is an enterprise product with enterprise contracting. Not the fastest path for a mid-market buyer who needs cookieless match rates operationalized quickly.</p>
+        </div>
+        <div class="scenario-cell cell-exp">
+          <div class="scenario-cell-vendor">Experian</div>
+          <span class="win-badge draw">Possible</span>
+          <p>On-shelf activation in major platforms makes Experian more accessible than TransUnion for buyers who don't have existing bureau contracts. Still an enterprise relationship in practice.</p>
+        </div>
+        <div class="scenario-cell cell-pub">
+          <div class="scenario-cell-vendor">Publicis Stack</div>
+          <span class="win-badge draw">Watch</span>
+          <p>RampID is the current market leader. Publicis may enhance RampID using Epsilon's Core ID, or it may pull back the availability of RampID to third parties altogether.</p>
+        </div>
+      </div>
+
+
+      <div class="scenario-card">
+        <div class="scenario-label">
+          <div class="scenario-label-title">Brand needing unified MMM + MTA measurement across TV and digital</div>
+          <div class="scenario-label-desc">Marketer with a fragmented "frankenstack" wanting a single measurement vendor covering both modeling and attribution</div>
+        </div>
+        <div class="scenario-cell cell-tu">
+          <div class="scenario-cell-vendor">TransUnion</div>
+          <span class="win-badge win">Wins (native)</span>
+          <p>The only player in this analysis with both MMM and MTA as native products. The Neustar modeling heritage plus TikTok MTA partnership plus VideoAmp TV integration make TruAudience Analytics the most complete measurement offering of the three. Bayer's consolidation of its measurement stack with TransUnion and Nielsen is the reference case.</p>
+        </div>
+        <div class="scenario-cell cell-exp">
+          <div class="scenario-cell-vendor">Experian</div>
+          <span class="win-badge draw">Not a standalone answer</span>
+          <p>Experian powers measurement for other platforms but does not sell MMM, MTA, or incrementality testing directly. A brand that wants Experian-anchored measurement still needs to contract a platform like VideoAmp, MiQ, or AdRoll separately. Experian is the infrastructure; it is not the product.</p>
+        </div>
+        <div class="scenario-cell cell-pub">
+          <div class="scenario-cell-vendor">Publicis Stack</div>
+          <span class="win-badge adv">Competitive (for Publicis clients)</span>
+          <p>Epsilon's measurement capabilities, Epsilon Digital, and the Epsilon PeopleCloud platform form a measurement practice comparable to TruAudience Analytics for Publicis agency clients. For non-Publicis clients, the same holding-company neutrality question applies: do you want your measurement and your media buying in the same roof?</p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <div class="footnote">
+    <sup>*</sup> The author of this analysis worked at Neustar/TransUnion (2017 to 2021), before the acquisition. This is independent analysis based entirely on public information. Nothing from that period informed the findings. All figures come from public filings, product documentation, and press releases cited below.
+  </div>
+
+  <div class="sources" id="sources">
+    <strong>Sources</strong><br>
+    TransUnion: Form 10-Q (Q1 2026); Form 8-K (FY2025, FY2026); TruAudience product page; Globe Newswire press release (Jan 4, 2024); AdMonsters interview with Michael Schoen (Feb 2024); MarTech.org TruAudience coverage; TransUnion Annual Report (FY2025); TruAudience Modeling Approach whitepaper (Neustar/TransUnion); TransUnion/eMarketer "True Cost of Trust in Marketing Measurement" report (Oct 2025, n=196); TikTok for Business blog MTA partnership (Sep 2023); TransUnion/VideoAmp integration announcement (Aug 2023); BusinessWire Neustar/BERA partnership (Dec 2021); Globe Newswire OneTru platform results (Apr 2025); TransUnion AI/ML product page; StockTitan TRU AI Analytics Orchestrator Agent announcement (Mar 2026); StockTitan TRU FY2026 AI strategy investor presentation (Mar 2026).<br><br>
+    Experian: MacroTrends annual revenue (FY2025, EXPGY); Experian Marketing Services blog (marketing-forward.com), multiple posts Feb–May 2026; Digital Graph product page; Data Marketplace launch announcement (2025); Experian ConsumerView documentation; DASH TV Universe Study (ARF/Experian, 2025); NextTV "Experian Benefits From Television's Data Boom" (2022); Experian TV Advertising Partners page; Experian Ascend platform page; Experian "Good Data in the Age of AI" blog (Feb 2026); Experian 2026 Digital Trends and Predictions report; Experian Global Insights 2026 report; IDC MarketScape Identity Verification Financial Services 2025 (Leadership designation); AdExchanger VideoAmp identity interview (2021).<br><br>
+    VideoAmp: StreamTV Insider "$3B in Media Currency" (Dec 2024); MediaPost Commingled ID Graph announcement (Dec 2024); JIC certification coverage (2024).<br><br>
+    ID5: Crunchbase company profile; BusinessWire TrueData acquisition (Nov 2025); AdExchanger TrueData acquisition interview with Mathieu Roche (Nov 2025); Startup Intros company profile; Landbase usage data (2026); ID5 2025 State of Digital Identity Report (Sep 2025, n=250); Digiday Trade Desk Identity Alliance (Mar 2026); ID5 campaign measurement knowledge base (wiki.id5.io); ID5 Adaptive Identity rebrand announcement (Jun 2025); ID5 Adaptive Identity landscape series (Jul 2025); ID5 technology page (id5.io/technology); IAB UK ID5 directory.<br><br>
+    Cross-vendor: Digiday Trade Desk Identity Alliance payouts article (March 2026); MarTech "5 Trends Reshaping Identity Resolution in 2026" (Mar 2026). Ratings reflect the author's independent interpretation of publicly available product capabilities and market positioning, not sourced third-party ratings.
+  </div>
+
+</div>
+    </div>
+  </div>
 </body>
 </html>
